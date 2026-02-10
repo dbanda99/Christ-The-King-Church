@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Thank You • Christ The King Catholic Church</title>
+  <meta name="description" content="Thank you for your gift to Christ The King Catholic Church.">
+  <link rel="icon" type="image/png" href="assets/data/church-logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="assets/css/styles.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg sticky-top navbar-light bg-white border-bottom">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+      <img class="brand-mark" src="assets/data/church-logo.png" alt="Christ The King">
+      <span class="fw-semibold">Christ The King</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav" aria-controls="nav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="nav" class="collapse navbar-collapse">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="giving.html">Giving</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<section class="section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="card-soft p-4 p-md-5">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <i class="bi bi-check-circle-fill fs-4"></i>
+            <h1 class="section-title mb-0">Thank you for your gift</h1>
+          </div>
+
+          <p class="section-lead mb-4">
+            Your generosity supports our parish mission and ministries.
+          </p>
+
+          <div id="receiptBox" class="border rounded-4 p-3 bg-white">
+            <div class="text-muted small">Loading receipt details…</div>
+          </div>
+
+          <div class="d-flex flex-column flex-sm-row gap-2 mt-4">
+            <a class="btn btn-dark" href="index.html"><i class="bi bi-house-door me-1"></i> Back to Home</a>
+            <a class="btn btn-outline-dark" href="giving.html"><i class="bi bi-heart me-1"></i> Give again</a>
+          </div>
+
+          <p class="text-muted small mt-4 mb-0">
+            Need help? Please contact the parish office.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="border-top">
+  <div class="container py-4">
+    <div class="small text-muted">© 2026 Christ The King Catholic Church. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  (function () {
+    const box = document.getElementById("receiptBox");
+    const params = new URLSearchParams(window.location.search);
+    const sessionId = params.get("session_id");
+
+    if (!sessionId) {
+      box.innerHTML = '<div class="text-danger fw-semibold">Missing session details.</div>';
+      return;
+    }
+
+    fetch(`/.netlify/functions/get-checkout-session?session_id=${encodeURIComponent(sessionId)}`)
+      .then(r => r.json())
+      .then(data => {
+        if (data.error) throw new Error(data.error);
+
+        const amount = (data.amount_total != null)
+          ? (data.amount_total / 100).toFixed(2)
+          : null;
+
+        box.innerHTML = `
+          <div class="d-flex flex-column gap-1">
+            <div class="fw-semibold">Receipt</div>
+            <div class="small text-muted">Status: <span class="fw-semibold">${data.payment_status || data.status || "unknown"}</span></div>
+            ${amount ? `<div class="small text-muted">Amount: <span class="fw-semibold">$${amount}</span> (${(data.currency || "usd").toUpperCase()})</div>` : ""}
+            ${data.customer_email ? `<div class="small text-muted">Email: <span class="fw-semibold">${data.customer_email}</span></div>` : ""}
+            <div class="small text-muted">Session: <span class="font-monospace">${data.id}</span></div>
+          </div>
+        `;
+      })
+      .catch(err => {
+        console.error(err);
+        box.innerHTML = '<div class="text-danger fw-semibold">Could not load receipt details.</div>';
+      });
+  })();
+</script>
+
+</body>
+</html>

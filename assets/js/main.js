@@ -54,16 +54,20 @@ window.CTK_YT = window.CTK_YT || {
 
   // Giving form demo: create Stripe payment link button
   // For a real setup, replace with your Stripe Payment Link URL or Checkout session endpoint.
+  // Giving page: either open a Stripe Payment Link (simple) or use Netlify Functions (Checkout).
   const giveBtn = document.getElementById("giveNowBtn");
   if (giveBtn) {
-    giveBtn.addEventListener("click", () => {
-      const url = giveBtn.getAttribute("data-payment-link");
-      if (url && url.startsWith("http")) {
-        window.open(url, "_blank", "noopener");
-      } else {
-        alert("Set your Stripe Payment Link in giving.html (data-payment-link).");
-      }
-    });
+    const mode = giveBtn.getAttribute("data-give-mode") || "link"; // "link" or "checkout"
+    if (mode === "link") {
+      giveBtn.addEventListener("click", () => {
+        const url = giveBtn.getAttribute("data-payment-link");
+        if (url && url.startsWith("http")) {
+          window.open(url, "_blank", "noopener");
+        } else {
+          alert("Set your Stripe Payment Link URL in giving.html (data-payment-link).");
+        }
+      });
+    }
   }
 
   // Sermons page: auto-detect live status via YouTube Data API, fallback to latest upload, then show archive
