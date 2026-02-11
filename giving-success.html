@@ -47,7 +47,7 @@
             Your generosity supports our parish mission and ministries.
           </p>
 
-          <div id="receiptBox" class="border rounded-4 p-3 bg-white">
+          <div id="receiptBox" class="border rounded-4 p-3 p-md-4 bg-white">
             <div class="text-muted small">Loading receipt details…</div>
           </div>
 
@@ -74,12 +74,44 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
   (function () {
-    // IMPORTANT: GitHub Pages frontend -> Netlify backend
+    // GitHub Pages frontend -> Netlify backend
     const BACKEND_BASE = "https://christ-the-king-stripe-server.netlify.app";
 
     const box = document.getElementById("receiptBox");
     const params = new URLSearchParams(window.location.search);
     const sessionId = params.get("session_id");
+
+    const escapeHtml = (s) => String(s ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+
+    const formatMoney = (amountTotal, currency) => {
+      if (amountTotal == null) return "";
+      const amt = (Number(amountTotal) / 100);
+      const cur = (currency || "usd").toUpperCase();
+      return `$${amt.toFixed(2)} (${cur})`;
+    };
+
+    const prettyStatus = (s) => {
+      const val = (s || "").toString().toLowerCase();
+      if (!val) return "Unknown";
+      if (val === "paid") return "Paid";
+      if (val === "unpaid") return "Unpaid";
+      if (val === "no_payment_required") return "No payment required";
+      return val.replaceAll("_", " ").replace(/\b\w/g, c => c.toUpperCase());
+    };
+
+    const prettyFrequency = (f) => {
+      const val = (f || "").toString().toLowerCase();
+      if (!val) return "One-time";
+      if (val === "one_time" || val === "one-time") return "One-time";
+      if (val === "week" || val === "weekly") return "Weekly";
+      if (val === "month" || val === "monthly") return "Monthly";
+      return val.replaceAll("_", " ").replace(/\b\w/g, c => c.toUpperCase());
+    };
 
     if (!sessionId) {
       box.innerHTML = '<div class="text-danger fw-semibold">Missing session details.</div>';
@@ -101,17 +133,66 @@
         return data;
       })
       .then(data => {
-        const amount = (data.amount_total != null)
-          ? (data.amount_total / 100).toFixed(2)
-          : null;
+        const rawName =
+          data?.customer_details?.name ||
+          data?.customer_details?.billing_details?.name ||
+          data?.metadata?.donorName ||
+          "";
+
+        const name = rawName ? rawName : "Anonymous Donor";
+
+        const rawEmail =
+          data?.customer_email ||
+          data?.customer_details?.email ||
+          "";
+
+        const email = rawEmail ? rawEmail : "None";
+
+        // Fund/Frequency are best pulled from metadata (set during Checkout Session creation)
+        const fund = (data?.metadata?.fund || "").trim() || "General Offertory";
+        const frequency = prettyFrequency(data?.metadata?.frequency);
+
+        const status = prettyStatus(data.payment_status || data.status);
+        const amountStr = formatMoney(data.amount_total, data.currency);
 
         box.innerHTML = `
-          <div class="d-flex flex-column gap-1">
-            <div class="fw-semibold">Receipt</div>
-            <div class="small text-muted">Status: <span class="fw-semibold">${data.payment_status || data.status || "unknown"}</span></div>
-            ${amount ? `<div class="small text-muted">Amount: <span class="fw-semibold">$${amount}</span> (${(data.currency || "usd").toUpperCase()})</div>` : ""}
-            ${data.customer_email ? `<div class="small text-muted">Email: <span class="fw-semibold">${data.customer_email}</span></div>` : ""}
-            <div class="small text-muted">Session: <span class="font-monospace">${data.id}</span></div>
+          <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+            <div class="fw-semibold">Donation Receipt</div>
+            <span class="badge text-bg-light border">
+              <i class="bi bi-shield-check me-1"></i> Verified
+            </span>
+          </div>
+
+          <div class="row g-2 small">
+            <div class="col-12 col-md-6">
+              <div class="text-muted">Status</div>
+              <div class="fw-semibold">${escapeHtml(status)}</div>
+            </div>
+
+            <div class="col-12 col-md-6">
+              <div class="text-muted">Name</div>
+              <div class="fw-semibold">${escapeHtml(name)}</div>
+            </div>
+
+            <div class="col-12 col-md-6">
+              <div class="text-muted">Amount</div>
+              <div class="fw-semibold">${amountStr ? escapeHtml(amountStr) : "—"}</div>
+            </div>
+
+            <div class="col-12 col-md-6">
+              <div class="text-muted">Email</div>
+              <div class="fw-semibold">${escapeHtml(email)}</div>
+            </div>
+
+            <div class="col-12 col-md-6">
+              <div class="text-muted">Fund</div>
+              <div class="fw-semibold">${escapeHtml(fund)}</div>
+            </div>
+
+            <div class="col-12 col-md-6">
+              <div class="text-muted">Frequency</div>
+              <div class="fw-semibold">${escapeHtml(frequency)}</div>
+            </div>
           </div>
         `;
       })
