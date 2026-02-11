@@ -74,6 +74,9 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
   (function () {
+    // IMPORTANT: GitHub Pages frontend -> Netlify backend
+    const BACKEND_BASE = "https://christ-the-king-stripe-server.netlify.app";
+
     const box = document.getElementById("receiptBox");
     const params = new URLSearchParams(window.location.search);
     const sessionId = params.get("session_id");
@@ -83,11 +86,21 @@
       return;
     }
 
-    fetch(`/.netlify/functions/get-checkout-session?session_id=${encodeURIComponent(sessionId)}`)
-      .then(r => r.json())
-      .then(data => {
-        if (data.error) throw new Error(data.error);
+    const url = `${BACKEND_BASE}/.netlify/functions/get-checkout-session?session_id=${encodeURIComponent(sessionId)}`;
 
+    fetch(url, { method: "GET", cache: "no-store" })
+      .then(async (r) => {
+        let data = {};
+        try { data = await r.json(); } catch (_) {}
+
+        if (!r.ok) {
+          const msg = (data && data.error) ? data.error : `Request failed (${r.status})`;
+          throw new Error(msg);
+        }
+        if (data.error) throw new Error(data.error);
+        return data;
+      })
+      .then(data => {
         const amount = (data.amount_total != null)
           ? (data.amount_total / 100).toFixed(2)
           : null;
