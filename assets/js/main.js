@@ -140,7 +140,7 @@ window.CTK_YT = window.CTK_YT || {
 
       els.featuredPlaceholder.replaceWith(iframe);
 
-      if (els.liveHeading) els.liveHeading.textContent = (mode === "live") ? "Live Now" : "Most Recent Sermon";
+      if (els.liveHeading) els.liveHeading.textContent = (mode === "live") ? "En Vivo" : "Most Recent Sermon";
       if (els.liveSub) els.liveSub.textContent = (mode === "live")
         ? "We’re currently live — join the stream below."
         : "Not live right now — here’s the latest sermon.";
@@ -236,12 +236,12 @@ window.CTK_YT = window.CTK_YT || {
     async function detectLive(){
       if (!apiKey || !channelId) {
         if (els.ytConfigAlert) els.ytConfigAlert.classList.remove("d-none");
-        if (els.liveSub) els.liveSub.textContent = "Add your YouTube API key + Channel ID to enable live detection.";
+        if (els.liveSub) els.liveSub.textContent = "Agrega tu clave de API de YouTube y el ID del canal para habilitar la detección en vivo.";
         setStatus("Sermon archive requires YouTube API configuration.", true);
         return;
       }
 
-      if (els.channelLabel) els.channelLabel.textContent = "YouTube • Channel";
+      if (els.channelLabel) els.channelLabel.textContent = "YouTube • Canal";
 
       try{
         // 1) Live search
@@ -270,7 +270,7 @@ window.CTK_YT = window.CTK_YT || {
         // Load archive (first page)
         await loadArchive(false);
       } catch (err){
-        if (els.liveSub) els.liveSub.textContent = "Couldn’t load videos. Please verify your YouTube API key and Channel ID.";
+        if (els.liveSub) els.liveSub.textContent = "No se pudieron cargar los videos. Verifica tu clave de API de YouTube y el ID del canal.";
         setStatus(String(err?.message || err), true);
         if (els.ytConfigAlert) els.ytConfigAlert.classList.remove("d-none");
       }
@@ -285,6 +285,34 @@ window.CTK_YT = window.CTK_YT || {
     detectLive();
   }
 
-  initSermonsPage();
+  
+  function initMapSwitcher() {
+    const iframe = document.getElementById("ctkMapEmbed");
+    if (!iframe) return;
+
+    const buttons = Array.from(document.querySelectorAll(".js-map-btn"));
+    if (!buttons.length) return;
+
+    const setActive = (btn) => {
+      buttons.forEach(b => b.classList.remove("is-active"));
+      if (btn) btn.classList.add("is-active");
+    };
+
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const embed = btn.getAttribute("data-embed");
+        if (!embed) return;
+        iframe.src = embed;
+        setActive(btn);
+      });
+    });
+
+    // Default active state
+    setActive(buttons[0]);
+  }
+
+  initMapSwitcher();
+
+    initSermonsPage();
 
 })();
