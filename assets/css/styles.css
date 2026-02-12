@@ -8,6 +8,9 @@
   --ctk-radius: 18px;
 }
 
+
+html{ scroll-behavior: smooth; }
+#mapa{ scroll-margin-top: 110px; }
 html, body{
   background: var(--ctk-bg);
   color: var(--ctk-text);
@@ -195,18 +198,27 @@ body{ overflow-x:hidden; }
   margin-bottom: 1.25rem;
 }
 .feature-title{
-  font-family: "Crimson Text", serif;
-  font-weight: 600;
-  font-size: 1.7rem;
-  margin: 0 0 .55rem;
+  font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-weight: 800;
+  font-size: 2.1rem;
+  letter-spacing: -0.02em;
+  margin: 0 0 .65rem;
 }
 .feature-text{
   color: var(--ctk-muted);
-  margin: 0 0 1.4rem;
+  margin: 0 0 1.6rem;
+  max-width: 22rem;
+}
+
+.feature-card .btn{
+  border-radius: 999px;
+  padding: .8rem 1.25rem;
+  font-weight: 600;
 }
 @media (max-width: 575.98px){
   .feature-card{ padding: 1.8rem 1.3rem; }
   .feature-icon{ width: 84px; height: 84px; font-size: 1.85rem; }
+  .feature-title{ font-size: 1.85rem; }
 }
 
 .badge-soft{
