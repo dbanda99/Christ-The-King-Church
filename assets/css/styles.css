@@ -57,6 +57,146 @@ html, body{
   background: var(--ctk-soft);
 }
 
+
+/* ==============================
+   Home: fullscreen hero + overlay navbar
+   ============================== */
+.page-home{ overflow-x:hidden; }
+
+/* Use fixed navbar only on home */
+.page-home .ctk-navbar{
+  background: rgba(0,0,0,.28);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,.16);
+  transition: background-color .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+.page-home .ctk-navbar .brand-title,
+.page-home .ctk-navbar .brand-subtitle,
+.page-home .ctk-navbar .nav-link{
+  color: #ffffff;
+}
+.page-home .ctk-navbar .nav-link.active,
+.page-home .ctk-navbar .nav-link:hover{
+  background: rgba(255,255,255,.12);
+}
+.page-home .ctk-navbar .navbar-toggler{
+  border-color: rgba(255,255,255,.35);
+}
+.page-home .ctk-navbar .btn-dark{
+  background: #ffffff;
+  border-color: #ffffff;
+  color: #0c0c0c;
+}
+.page-home .ctk-navbar .btn-outline-dark{
+  border-color: rgba(255,255,255,.55);
+  color: #ffffff;
+}
+.page-home .ctk-navbar .btn-outline-dark:hover{
+  background: rgba(255,255,255,.14);
+}
+
+/* When leaving hero: match the current site look (white bar) */
+.page-home .ctk-navbar.nav-scrolled{
+  background: #ffffff;
+  border-bottom: 1px solid var(--ctk-border);
+  box-shadow: 0 10px 30px rgba(0,0,0,.06);
+}
+.page-home .ctk-navbar.nav-scrolled .brand-title{ color: var(--ctk-text); }
+.page-home .ctk-navbar.nav-scrolled .brand-subtitle{ color: var(--ctk-muted); }
+.page-home .ctk-navbar.nav-scrolled .nav-link{ color: #1a1a1a; }
+.page-home .ctk-navbar.nav-scrolled .nav-link.active,
+.page-home .ctk-navbar.nav-scrolled .nav-link:hover{ background: var(--ctk-soft); }
+.page-home .ctk-navbar.nav-scrolled .navbar-toggler{ border-color: rgba(0,0,0,.22); }
+.page-home .ctk-navbar.nav-scrolled .btn-dark{
+  background: #111;
+  border-color: #111;
+  color: #fff;
+}
+.page-home .ctk-navbar.nav-scrolled .btn-outline-dark{
+  border-color: rgba(0,0,0,.30);
+  color: #111;
+}
+.page-home .ctk-navbar.nav-scrolled .btn-outline-dark:hover{
+  background: var(--ctk-soft);
+}
+
+/* Fullscreen hero */
+.page-home header.hero{
+  position: relative;
+  min-height: 100vh;
+  height: 100vh;
+  border-bottom: 1px solid var(--ctk-border);
+  background: #000;
+}
+.page-home header.hero .carousel,
+.page-home header.hero .carousel-inner,
+.page-home header.hero .carousel-item{
+  height: 100vh;
+}
+.page-home header.hero .carousel-inner{
+  border-radius: 0;
+  border: 0;
+}
+
+.page-home header.hero .carousel-indicators{
+  bottom: 58px;
+}
+.page-home .hero-slide{
+  position: relative;
+  min-height: 100vh;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  background-size: cover;
+  background-position: center;
+}
+.page-home .hero-overlay{
+  background: radial-gradient(900px 520px at 50% 38%,
+    rgba(0,0,0,.58) 0%,
+    rgba(0,0,0,.28) 52%,
+    rgba(0,0,0,.62) 100%);
+}
+.page-home .hero-content{
+  padding: clamp(1.5rem, 4vw, 3.25rem);
+  max-width: 760px;
+}
+.page-home .hero-kicker{
+  color: rgba(255,255,255,.78);
+}
+.page-home .hero-quote,
+.page-home .hero-ref{
+  color: #ffffff;
+  text-shadow: 0 10px 30px rgba(0,0,0,.35);
+}
+.page-home .hero-actions .btn{
+  border-radius: 999px;
+  padding: .7rem 1.05rem;
+}
+
+/* Subtle scroll hint */
+.hero-scroll-hint{
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  color: rgba(255,255,255,.85);
+  font-size: 1.4rem;
+  z-index: 5;
+  pointer-events: none;
+  animation: ctk-bounce 1.6s infinite;
+}
+@keyframes ctk-bounce{
+  0%, 100%{ transform: translateX(-50%) translateY(0); }
+  50%{ transform: translateX(-50%) translateY(8px); }
+}
+
+@media (max-width: 991.98px){
+  .page-home .ctk-navbar{
+    background: rgba(0,0,0,.50);
+  }
+}
+
 .hero{
   border-bottom: 1px solid var(--ctk-border);
   background: linear-gradient(180deg, #fff 0%, #fff 40%, var(--ctk-soft) 100%);
@@ -115,6 +255,11 @@ body{ overflow-x:hidden; }
 
 .section{
   padding: 3.5rem 0;
+}
+
+.section.section-features{
+  padding-top: 2.75rem;
+  padding-bottom: 2.0rem;
 }
 .section-title{
   font-family: "Crimson Text", serif;

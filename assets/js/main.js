@@ -311,6 +311,46 @@ window.CTK_YT = window.CTK_YT || {
     setActive(buttons[0]);
   }
 
+
+  // Home hero navbar: transparent on hero, solid on scroll
+  function initHomeHeroNavbar(){
+    const body = document.body;
+    if (!body.classList.contains("page-home")) return;
+
+    const navbar = document.getElementById("siteNavbar");
+    const hero = document.querySelector("header.hero");
+    if (!navbar || !hero) return;
+
+    const update = () => {
+      const navH = navbar.offsetHeight || 80;
+      const heroH = hero.offsetHeight || window.innerHeight;
+      const onHero = window.scrollY < (heroH - navH - 8);
+
+      navbar.classList.toggle("nav-scrolled", !onHero);
+      navbar.classList.toggle("nav-hero", onHero);
+
+      // Toggle bootstrap theme classes for proper toggler icon coloring
+      navbar.classList.toggle("navbar-dark", onHero);
+      navbar.classList.toggle("navbar-light", !onHero);
+    };
+
+    update();
+
+    let ticking = false;
+    window.addEventListener("scroll", () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        update();
+        ticking = false;
+      });
+    }, { passive: true });
+
+    window.addEventListener("resize", update);
+  }
+
+  initHomeHeroNavbar();
+
   initMapSwitcher();
 
     initSermonsPage();
