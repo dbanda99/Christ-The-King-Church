@@ -5,8 +5,8 @@
 // 2) Set your CHANNEL_ID below (from your YouTube channel).
 // NOTE: Leaving apiKey empty will show a setup message on sermons.html.
 window.CTK_YT = window.CTK_YT || {
-  apiKey: "",
-  channelId: "",
+  apiKey: "AIzaSyAu1YwNubmQ5Q_1uqgSsMZ9BUMnmUOHph8",
+  channelId: "UCwyPTh50o5Z_FQLkYYtx4WQ",
   maxResults: 12
 };
 
