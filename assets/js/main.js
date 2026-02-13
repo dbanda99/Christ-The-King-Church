@@ -140,10 +140,10 @@ window.CTK_YT = window.CTK_YT || {
 
       els.featuredPlaceholder.replaceWith(iframe);
 
-      if (els.liveHeading) els.liveHeading.textContent = (mode === "live") ? "En Vivo" : "Most Recent Sermon";
+      if (els.liveHeading) els.liveHeading.textContent = (mode === "live") ? "En Vivo" : "Sermón más reciente";
       if (els.liveSub) els.liveSub.textContent = (mode === "live")
-        ? "We’re currently live — join the stream below."
-        : "Not live right now — here’s the latest sermon.";
+        ? "Actualmente estamos en vivo: únete a la transmisión a continuación"
+        : "No en vivo ahora: aquí está el último sermón.";
 
       const dateStr = publishedAt ? publishedAt.toLocaleDateString(undefined, { year:"numeric", month:"short", day:"numeric" }) : "";
       if (els.featuredMeta) els.featuredMeta.textContent = title + (dateStr ? (" • " + dateStr) : "");
@@ -205,7 +205,7 @@ window.CTK_YT = window.CTK_YT || {
       state.loading = true;
 
       try{
-        setStatus("Loading sermons…", true);
+        setStatus("Cargando sermones…", true);
         const data = await ytFetch({
           part: "snippet",
           type: "video",
@@ -227,7 +227,7 @@ window.CTK_YT = window.CTK_YT || {
           els.loadMoreBtn.classList.toggle("d-none", !state.nextPageToken);
         }
 
-        setStatus(state.videos.length ? "" : "No videos found yet.", !state.videos.length);
+        setStatus(state.videos.length ? "" : "No se encontraron videos todavía", !state.videos.length);
       } finally {
         state.loading = false;
       }
