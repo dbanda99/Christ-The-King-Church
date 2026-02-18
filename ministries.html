@@ -1,238 +1,611 @@
 <!DOCTYPE html>
 
 <html lang="es">
+
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Ministerios • Iglesia Católica Cristo Rey</title>
-<meta content="Cristo Rey Iglesia Católica en Laredo, TX — horarios de Misa, ministerios, noticias, boletín y donaciones." name="description"/>
-<meta content="Iglesia Católica Cristo Rey" property="og:title"/>
-<meta content="Bienvenidos. Acompáñanos a Misa, ministerios y vida parroquial." property="og:description"/>
-<meta content="website" property="og:type"/>
-<meta content="assets/data/church-logo.png" property="og:image"/>
-<meta content="summary_large_image" name="twitter:card"/>
-<link href="assets/data/church-logo.png" rel="icon" type="image/png"/>
-<link href="assets/data/church-logo.png" rel="apple-touch-icon"/>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
-<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
-<link href="assets/css/styles.css" rel="stylesheet"/>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <title>Ministerios • Iglesia Católica Cristo Rey</title>
+  <meta
+    content="Cristo Rey Iglesia Católica en Laredo, TX — horarios de Misa, ministerios, noticias, boletín y donaciones."
+    name="description" />
+  <meta content="Iglesia Católica Cristo Rey" property="og:title" />
+  <meta content="Bienvenidos. Acompáñanos a Misa, ministerios y vida parroquial." property="og:description" />
+  <meta content="website" property="og:type" />
+  <meta content="assets/data/church-logo.png" property="og:image" />
+  <meta content="summary_large_image" name="twitter:card" />
+  <link href="assets/data/church-logo.png" rel="icon" type="image/png" />
+  <link href="assets/data/church-logo.png" rel="apple-touch-icon" />
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600&amp;family=Inter:wght@400;500;600;700&amp;display=swap"
+    rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <link href="assets/css/styles.css" rel="stylesheet" />
+  <style>
+    /* Ensure all ministry icons are the same size */
+    .icon-pill {
+      width: 44px;
+      height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      flex: 0 0 44px;
+    }
+
+    .icon-pill i {
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    /* Preserve spacing for schedule lines copied from Word */
+    .ministry-desc {
+      white-space: pre-wrap;
+      tab-size: 4;
+    }
+  </style>
+  <style>
+    /* Ministries Carousel (card-ribbon style) */
+    .ctk-carousel {
+      --card-w: clamp(240px, 42vw, 340px);
+      --gap: 20px;
+      position: relative;
+      margin-top: 28px;
+      padding: 18px 10px 26px;
+      border-radius: 28px;
+
+    }
+
+    .ctk-viewport {
+      background-color: #dfdfdf;
+      overflow: hidden;
+      width: 100%;
+      max-width: 100%;
+      padding: 10px 10px 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* nav buttons sit outside viewport flow */
+    .ctk-carousel .ctk-prev,
+    .ctk-carousel .ctk-next {
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .ctk-track {
+      display: flex;
+      gap: var(--gap);
+      will-change: transform;
+      transition: transform .65s cubic-bezier(.2, .8, .2, 1);
+    }
+
+    .ctk-slide {
+      flex: 0 0 var(--card-w);
+      display: flex;
+      justify-content: center;
+      padding: 14px 0;
+      opacity: .25;
+      transform: scale(.85);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+
+    .ctk-slide.is-active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .ctk-card {
+      position: relative;
+      width: 100%;
+      height: 500px;
+      aspect-ratio: 3 / 4;
+      border-radius: 26px;
+      overflow: hidden;
+      background: #05060a;
+      background-image: var(--bg-url);
+      background-size: cover;
+      background-position: center;
+      border: 1px solid rgba(120, 175, 255, .28);
+      box-shadow: -2px 5px 5px rgba(0, 0, 0, .25);
+      display: flex;
+    }
+
+    /* keep img tag in markup but do not use it for layout */
+    .ctk-bg {
+      display: none;
+    }
+
+    .ctk-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(900px 520px at 55% 40%, rgba(0, 0, 0, .10), rgba(0, 0, 0, .78)),
+        linear-gradient(180deg, rgba(0, 0, 0, .55), rgba(0, 0, 0, .88));
+      z-index: 1;
+    }
+
+    .ctk-ribbon {
+      position: absolute;
+      z-index: 3;
+      top: 22px;
+      left: 22px;
+      width: min(86%, 520px);
+      background: #b40000;
+      color: #fff;
+      padding: 14px 18px;
+      border-radius: 6px;
+      box-shadow: 0 14px 26px rgba(0, 0, 0, .35);
+      clip-path: polygon(0 0, 100% 0, calc(100% - 34px) 50%, 100% 100%, 0 100%);
+    }
+
+    .ctk-ribbon h2 {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.1;
+      font-weight: 900;
+      letter-spacing: .2px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, .35);
+    }
+
+    .ctk-content {
+      position: relative;
+      z-index: 3;
+      padding: 80px 28px 26px;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .ctk-list {
+      margin: 0;
+      padding-left: 28px;
+      color: rgba(255, 255, 255, .96);
+      font-size: 14px;
+      line-height: 1.75;
+      text-shadow: 0 2px 14px rgba(0, 0, 0, .55);
+    }
+
+    .ctk-list li {
+      margin: 6px 0;
+    }
+
+    .ctk-action {
+      margin-top: auto;
+      align-self: center;
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: clamp(1.15rem, 1rem + .6vw, 1.5rem);
+      padding: 10px 12px;
+      border-bottom: 2px solid rgba(255, 255, 255, .90);
+      text-shadow: 0 2px 14px rgba(0, 0, 0, .55);
+    }
+
+    .ctk-action:hover {
+      opacity: .92;
+      color: #fff
+    }
+
+    .ctk-action:focus-visible {
+      outline: 3px solid rgba(255, 255, 255, .35);
+      outline-offset: 6px;
+      border-radius: 14px;
+    }
+
+    .ctk-nav {
+      position: absolute;
+      pointer-events: auto;
+      width: 44px;
+      height: 44px;
+      border: 1px solid rgba(255, 255, 255, .18);
+      background: rgba(10, 12, 18, .65);
+      color: #fff;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      cursor: pointer;
+      transition: transform .12s ease, background .2s ease, opacity .2s ease;
+      backdrop-filter: blur(10px);
+      z-index: 50;
+    }
+
+    .ctk-nav:hover {
+      background: rgba(10, 12, 18, .82)
+    }
+
+    .ctk-nav:active {
+      transform: translateY(1px)
+    }
+
+    .ctk-prev {
+      left: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .ctk-next {
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    @media (min-width: 992px) {
+      .ctk-prev {
+        left: -6px;
+      }
+
+      .ctk-next {
+        right: -6px;
+      }
+    }
+
+    .ctk-dots {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
+      margin-top: 12px;
+    }
+
+    .ctk-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      border: 0;
+      background: rgba(255, 255, 255, .28);
+      cursor: pointer;
+      transition: transform .15s ease, background .2s ease, width .2s ease;
+    }
+
+    .ctk-dot[aria-current="true"] {
+      background: rgba(255, 255, 255, .92);
+      width: 28px;
+    }
+
+    .ctk-dot:focus-visible {
+      outline: 3px solid rgba(255, 255, 255, .35);
+      outline-offset: 3px;
+    }
+
+    @media (max-width: 420px) {
+      .ctk-ribbon {
+        right: 22px;
+      }
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+
+      .ctk-track,
+      .ctk-slide,
+      .ctk-bg {
+        transition: none !important;
+      }
+
+      .ctk-bg {
+        transform: none !important;
+      }
+    }
+  </style>
 </head>
+
 <body>
-<nav class="navbar navbar-expand-lg sticky-top navbar-light bg-white border-bottom">
-<div class="container">
-<a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
-<img alt="Christ The King Church Logo" class="brand-logo" height="40" src="assets/data/church-logo.png" width="40"/>
-<div class="d-flex flex-column lh-sm">
-<span class="brand-title">Iglesia Católica Cristo Rey</span>
-<small class="brand-subtitle">Viva Cristo Rey!</small>
-</div>
-</a>
-<div class="d-flex align-items-center gap-2 order-lg-3">
-<div class="lang-wrap">
-<button aria-expanded="false" class="btn btn-outline-dark btn-sm dropdown-toggle" data-bs-toggle="dropdown" type="button">
-<i class="bi bi-translate me-1"></i>Idioma</button>
-<div class="dropdown-menu dropdown-menu-end p-2 shadow-sm">
-<div id="google_translate_element"></div>
-<small class="text-muted d-block mt-2">Consejo: si lo necesitas, puedes usar el traductor de tu navegador.</small>
-</div>
-</div>
-<button aria-controls="navMain" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#navMain" data-bs-toggle="collapse" type="button">
-<span class="navbar-toggler-icon"></span>
-</button>
-</div>
-<div class="collapse navbar-collapse order-lg-2" id="navMain">
-<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-<li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
-<li class="nav-item"><a class="nav-link" href="worship.html">Misa</a></li>
-<li class="nav-item"><a class="nav-link" href="news.html">Noticias</a></li>
-<li class="nav-item"><a class="nav-link" href="bulletin.html">Boletín</a></li>
-<li class="nav-item"><a class="nav-link" href="sermons.html">Sermones</a></li>
-<li class="nav-item"><a aria-current="page" class="nav-link active" href="ministries.html">Ministerios</a></li>
-<li class="nav-item"><a class="nav-link" href="giving.html">Donar</a></li>
-<li class="nav-item"><a class="nav-link" href="contact.html">Contacto</a></li>
-</ul>
-<div class="ms-lg-3 d-flex gap-2 mt-3 mt-lg-0">
-<a class="btn btn-dark btn-sm" href="giving.html"><i class="bi bi-heart-fill me-1"></i>Donar</a>
-<a class="btn btn-outline-dark btn-sm" href="contact.html"><i class="bi bi-chat-dots me-1"></i> Get in
+  <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-white border-bottom">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+        <img alt="Christ The King Church Logo" class="brand-logo" height="40" src="assets/data/church-logo.png"
+          width="40" />
+        <div class="d-flex flex-column lh-sm">
+          <span class="brand-title">Iglesia Católica Cristo Rey</span>
+          <small class="brand-subtitle">Viva Cristo Rey!</small>
+        </div>
+      </a>
+      <div class="d-flex align-items-center gap-2 order-lg-3">
+        <div class="lang-wrap">
+          <button aria-expanded="false" class="btn btn-outline-dark btn-sm dropdown-toggle" data-bs-toggle="dropdown"
+            type="button">
+            <i class="bi bi-translate me-1"></i>Idioma</button>
+          <div class="dropdown-menu dropdown-menu-end p-2 shadow-sm">
+            <div id="google_translate_element"></div>
+            <small class="text-muted d-block mt-2">Consejo: si lo necesitas, puedes usar el traductor de tu
+              navegador.</small>
+          </div>
+        </div>
+        <button aria-controls="navMain" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+          data-bs-target="#navMain" data-bs-toggle="collapse" type="button">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+      <div class="collapse navbar-collapse order-lg-2" id="navMain">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="worship.html">Misa</a></li>
+          <li class="nav-item"><a class="nav-link" href="news.html">Noticias</a></li>
+          <li class="nav-item"><a class="nav-link" href="bulletin.html">Boletín</a></li>
+          <li class="nav-item"><a class="nav-link" href="sermons.html">Sermones</a></li>
+          <li class="nav-item"><a aria-current="page" class="nav-link active" href="ministries.html">Ministerios</a>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="giving.html">Donar</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contacto</a></li>
+        </ul>
+        <div class="ms-lg-3 d-flex gap-2 mt-3 mt-lg-0">
+          <a class="btn btn-dark btn-sm" href="giving.html"><i class="bi bi-heart-fill me-1"></i>Donar</a>
+          <a class="btn btn-outline-dark btn-sm" href="contact.html"><i class="bi bi-chat-dots me-1"></i> Get in
             touch</a>
-</div>
-</div>
-</div>
-</nav>
-<section class="section">
-<div class="container">
-<div class="row align-items-center g-4">
-<div class="col-lg-6" data-aos="fade-right">
-<h1 class="section-title">Ministerios</h1>
-<p class="section-lead">Hay un lugar para ti: para servir, crecer y pertenecer.</p>
-<div class="d-flex gap-2 flex-wrap">
-<a class="btn btn-dark" href="contact.html"><i class="bi bi-person-plus me-1"></i>Únete a un ministerio</a>
-<a class="btn btn-outline-dark" href="giving.html"><i class="bi bi-heart me-1"></i> Support our mission</a>
-</div>
-</div>
-<div class="col-lg-6" data-aos="fade-left">
-<img alt="Ministerios" class="media-img" src="assets/data/ministerio/bajo-el-manto-de-maria.svg"/>
-</div>
-</div>
-<div class="row align-items-center">
-<div class="col-lg-12 mt-4 mt-lg-5">
-<p class="text-muted">El Movimiento Apostolado de Fátima es un movimiento mariano con la misión de reparación, adoración y consuelo a los Sagrados Corazones. Nuestra tarea principal es orar por la santificación de los sacerdotes, las vocaciones, la salvación de las almas del purgatorio y las intenciones de María. Lo realizamos mediante actividades dentro de nuestros apostolados, incluyendo:
-El Altar Vocacional: En nuestra parroquia Cristo Rey, en cada Misa celebrada, tenemos la oportunidad de unirnos en oración como Iglesia orante, recibiendo la visita de Nuestra Madre Santísima en los hogares para bendecirlos, entronizando el Sagrado Corazón de Jesús como Rey y Señor de sus hogares, y consagrando a todos los miembros de la familia a los Sagrados Corazones de Jesús, María y José. Cada familia asume la misión de orar cada semana por una de 52 peticiones y virtudes diferentes, cubriendo así a toda nuestra comunidad con el manto de María. Agradecemos a las 208 familias que se unen a este apostolado durante el año.
-En conjunto con el programa de Catecismo (CCD), los niños de la comunidad reciben un Osito Vocacional para motivarlos a orar por los seminaristas.
-En los Primeros Viernes de Reparación al Sagrado Corazón de Jesús, oramos por la santificación de todos nuestros sacerdotes en nuestra Diócesis, especialmente por nuestro párroco, el P. Toribio Guerrero, a quien agradecemos su apoyo incondicional a nuestro Movimiento. Ofrecemos la Misa, y las familias pueden llevar el Altar del Sagrado Corazón con la novena de la Divina Misericordia por un enfermo o una novena por un familiar difunto durante el mes. Hacemos todo para dar gloria a Dios y de acuerdo con Su Divina Voluntad. Estamos a su servicio.</p>
-<p class="text-muted">
+        </div>
+      </div>
+    </div>
+  </nav>
+  <section class="section">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-6" data-aos="fade-right">
+          <h1 class="section-title">Ministerios</h1>
+          <p class="section-lead">Hay un lugar para ti: para servir, crecer y pertenecer.</p>
+          <div class="d-flex gap-2 flex-wrap">
+            <a class="btn btn-dark" href="contact.html"><i class="bi bi-person-plus me-1"></i>Únete a un ministerio</a>
+            <a class="btn btn-outline-dark" href="giving.html"><i class="bi bi-heart me-1"></i> Support our mission</a>
+          </div>
+        </div>
+        <div class="col-lg-6" data-aos="fade-left">
+          <img alt="Ministerios" class="media-img" src="assets/data/ministerio/bajo-el-manto-de-maria.svg" />
+        </div>
+      </div>
+      <div class="row align-items-center">
+        <div class="col-lg-12 mt-4 mt-lg-5">
+          <p class="text-muted">El Movimiento Apostolado de Fátima es un movimiento mariano con la misión de reparación,
+            adoración y consuelo a los Sagrados Corazones. Nuestra tarea principal es orar por la santificación de los
+            sacerdotes, las vocaciones, la salvación de las almas del purgatorio y las intenciones de María. Lo
+            realizamos mediante actividades dentro de nuestros apostolados, incluyendo:
+            El Altar Vocacional: En nuestra parroquia Cristo Rey, en cada Misa celebrada, tenemos la oportunidad de
+            unirnos en oración como Iglesia orante, recibiendo la visita de Nuestra Madre Santísima en los hogares para
+            bendecirlos, entronizando el Sagrado Corazón de Jesús como Rey y Señor de sus hogares, y consagrando a todos
+            los miembros de la familia a los Sagrados Corazones de Jesús, María y José. Cada familia asume la misión de
+            orar cada semana por una de 52 peticiones y virtudes diferentes, cubriendo así a toda nuestra comunidad con
+            el manto de María. Agradecemos a las 208 familias que se unen a este apostolado durante el año.
+            En conjunto con el programa de Catecismo (CCD), los niños de la comunidad reciben un Osito Vocacional para
+            motivarlos a orar por los seminaristas.
+            En los Primeros Viernes de Reparación al Sagrado Corazón de Jesús, oramos por la santificación de todos
+            nuestros sacerdotes en nuestra Diócesis, especialmente por nuestro párroco, el P. Toribio Guerrero, a quien
+            agradecemos su apoyo incondicional a nuestro Movimiento. Ofrecemos la Misa, y las familias pueden llevar el
+            Altar del Sagrado Corazón con la novena de la Divina Misericordia por un enfermo o una novena por un
+            familiar difunto durante el mes. Hacemos todo para dar gloria a Dios y de acuerdo con Su Divina Voluntad.
+            Estamos a su servicio.</p>
+          <p class="text-muted">
             Coordination
           </p>
-<p class="text-muted">
+          <p class="text-muted">
             Coordinadores con teléfono
           </p>
-</div>
-<div class="row g-3 mt-3">
-<div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="0">
-<div class="card-soft p-4 h-100">
-<div class="d-flex align-items-start gap-3">
-<div class="icon-pill"><i class="bi bi-music-note-beamed"></i></div>
-<div>
-<h3 class="h5 mb-2">Liturgy &amp; Music</h3>
-<p class="small text-muted mb-3">Serve at Misa through music, hospitality, and liturgical ministries.</p>
-<a class="small fw-bold text-decoration-none" href="contact.html">Get involved <i class="bi bi-arrow-right"></i></a>
-</div>
-</div>
-</div>
-</div>
-<div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="60">
-<div class="card-soft p-4 h-100">
-<div class="d-flex align-items-start gap-3">
-<div class="icon-pill"><i class="bi bi-journal-bookmark"></i></div>
-<div>
-<h3 class="h5 mb-2">Faith Formation</h3>
-<p class="small text-muted mb-3">RCIA/OCIA, formación de adultos y preparación sacramental.</p>
-<a class="small fw-bold text-decoration-none" href="contact.html">Get involved <i class="bi bi-arrow-right"></i></a>
-</div>
-</div>
-</div>
-</div>
-<div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="120">
-<div class="card-soft p-4 h-100">
-<div class="d-flex align-items-start gap-3">
-<div class="icon-pill"><i class="bi bi-people"></i></div>
-<div>
-<h3 class="h5 mb-2">Youth &amp; Young Adults</h3>
-<p class="small text-muted mb-3">Comunidad, oración y actividades para estudiantes y jóvenes adultos.</p>
-<a class="small fw-bold text-decoration-none" href="contact.html">Get involved <i class="bi bi-arrow-right"></i></a>
-</div>
-</div>
-</div>
-</div>
-<div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="180">
-<div class="card-soft p-4 h-100">
-<div class="d-flex align-items-start gap-3">
-<div class="icon-pill"><i class="bi bi-hand-heart"></i></div>
-<div>
-<h3 class="h5 mb-2">Outreach</h3>
-<p class="small text-muted mb-3">Despensa de alimentos, servicio comunitario y obras de caridad.</p>
-<a class="small fw-bold text-decoration-none" href="contact.html">Get involved <i class="bi bi-arrow-right"></i></a>
-</div>
-</div>
-</div>
-</div>
-<div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="240">
-<div class="card-soft p-4 h-100">
-<div class="d-flex align-items-start gap-3">
-<div class="icon-pill"><i class="bi bi-shield"></i></div>
-<div>
-<h3 class="h5 mb-2">Knights / Men's Group</h3>
-<p class="small text-muted mb-3">Fraternidad, servicio y crecimiento espiritual.</p>
-<a class="small fw-bold text-decoration-none" href="contact.html">Get involved <i class="bi bi-arrow-right"></i></a>
-</div>
-</div>
-</div>
-</div>
-<div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="300">
-<div class="card-soft p-4 h-100">
-<div class="d-flex align-items-start gap-3">
-<div class="icon-pill"><i class="bi bi-flower1"></i></div>
-<div>
-<h3 class="h5 mb-2">Women's Ministry</h3>
-<p class="small text-muted mb-3">Amistad, oración y apoyo parroquial.</p>
-<a class="small fw-bold text-decoration-none" href="contact.html">Get involved <i class="bi bi-arrow-right"></i></a>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div></section>
-<footer class="footer mt-5 border-top">
-<div class="container py-5">
-<div class="row g-4">
-<div class="col-lg-3">
-<div class="d-flex align-items-center gap-2 mb-2">
-<img alt="Christ The King Church Logo" class="brand-logo" height="40" src="assets/data/church-logo.png" width="40"/>
-<div class="lh-sm">
-<div class="fw-bold">Iglesia Católica Cristo Rey</div>
-<small class="text-muted">Una comunidad parroquial acogedora.</small>
-</div>
-</div>
-<p class="text-muted small mb-3">Acompáñanos a la Misa, al servicio y a la comunidad. Todos son bienvenidos.</p>
-<div class="d-flex gap-2">
-<a aria-label="Facebook" class="social btn btn-outline-dark btn-sm" href="#"><i class="bi bi-facebook"></i></a>
-<a aria-label="X" class="social btn btn-outline-dark btn-sm" href="#"><i class="bi bi-twitter-x"></i></a>
-<a aria-label="YouTube" class="social btn btn-outline-dark btn-sm" href="#"><i class="bi bi-youtube"></i></a>
-<a aria-label="Instagram" class="social btn btn-outline-dark btn-sm" href="#"><i class="bi bi-instagram"></i></a>
-</div>
-</div>
-<div class="col-6 col-lg-3">
-<h6 class="text-uppercase small fw-bold mb-3">Vida Parroquial</h6>
-<ul class="list-unstyled footer-list">
-<li><a class="footer-link" href="worship.html#mass-times">Horario de Misas</a></li>
-<li><a class="footer-link" href="ministries.html">Ministerios</a></li>
-<li><a class="footer-link" href="bulletin.html">Boletín</a></li>
-<li class="nav-item"><a class="nav-link" href="sermons.html">Sermones</a></li>
-</ul>
-</div>
-<div class="col-6 col-lg-3">
-<h6 class="text-uppercase small fw-bold mb-3">Conectar</h6>
-<ul class="list-unstyled footer-list">
-<li><a class="footer-link" href="contact.html">Contacto</a></li>
-<li><a class="footer-link" href="news.html">Noticias</a></li>
-<li><a class="footer-link" href="giving.html">Online Donar</a></li>
-</ul>
-</div>
-<div class="col-6 col-lg-3">
-<h6 class="text-uppercase small fw-bold mb-3">Más</h6>
-<ul class="list-unstyled footer-list">
-<li><a class="footer-link" href="privacy.html">Privacidad</a></li>
-<li><a class="footer-link" href="accessibility.html">Accesibilidad</a></li>
-</ul>
-</div>
-<div class="col-lg-3">
-<h6 class="text-uppercase small fw-bold mb-3">Dirección</h6>
-<p class="small text-muted mb-2">
-            1105 Tilden Ave., Laredo, TX 78040<br/>
+        </div>
+        <div class="ctk-carousel" data-autoplay="true">
+          <h1 class="section-title">Grupos de Ministerios</h1>
+          <p class="section-lead">Los grupos de ministerios disponibles.</p>
+          <button aria-label="Anterior" class="ctk-nav ctk-prev" type="button"><i
+              class="bi bi-chevron-left"></i></button>
+          <div class="ctk-viewport">
+            <div class="ctk-track">
+              <article aria-label="Ministry to the Youth" class="ctk-slide" data-seed="Ministry to the Youth"
+                role="group">
+                <div class="ctk-card"><img alt="Ministry to the Youth" class="ctk-bg" loading="lazy" />
+                  <div class="ctk-ribbon">
+                    <h2>Ministry to the Youth</h2>
+                  </div>
+
+
+
+
+                  <div class="ctk-content">
+                    <ol class="ctk-list">
+                      <li>Altar Servers</li>
+                      <li>Young Adults</li>
+                      <li>Ministry for children</li>
+                      <li>CCD () / Catecismo</li>
+                    </ol><a class="ctk-action" href="contact.html">Involúcrate →</a>
+                  </div>
+                </div>
+              </article>
+              <article aria-label="Escuela de Evangelización" class="ctk-slide" data-seed="Escuela de Evangelización"
+                role="group">
+                <div class="ctk-card"><img alt="Escuela de Evangelización" class="ctk-bg" loading="lazy" />
+                  <div class="ctk-ribbon">
+                    <h2>Escuela de Evangelización</h2>
+                  </div>
+
+
+
+
+                  <div class="ctk-content">
+                    <ol class="ctk-list">
+                      <li>Pequeña comunidad lunes 7:00 PM (después de misa de 6:00)</li>
+                      <li>Asamblea de Alabanza Jueves 6:00 PM Adoración al Santísimo Sacramento</li>
+                      <li>Talleres de Oración Miércoles 7:00 PM (después de misa de 6:00)</li>
+                      <li>Grupo de Evangelización Martes 7:00 pm</li>
+                      <li>Movimiento Familia Cristiano Católico</li>
+                      <li>F.A.M.A. Familias en Misión Apostólica</li>
+                      <li>O.C.I.A. ()</li>
+                    </ol><a class="ctk-action" href="contact.html">Involúcrate →</a>
+                  </div>
+                </div>
+              </article>
+              <article aria-label="Worship" class="ctk-slide" data-seed="Worship" role="group">
+                <div class="ctk-card"><img alt="Worship" class="ctk-bg" loading="lazy" />
+                  <div class="ctk-ribbon">
+                    <h2>Worship</h2>
+                  </div>
+
+
+
+
+                  <div class="ctk-content">
+                    <ol class="ctk-list">
+                      <li>Music Ministry</li>
+                      <li>Community of Lectores</li>
+                      <li>Extraordinary Ministers of Holy Communion</li>
+                      <li>Liturgical Commission</li>
+                      <li>Apóstoles de Fatima Primer Sábado del Mes 8:00 am</li>
+                      <li>Adoración Nocturna Primer Sábado del Mes 8:00 pm</li>
+                      <li>Grupo Getsemani Ultimo Jueves del mes 11:00 pm</li>
+                      <li>Movimiento de Schoenstatt Cada 18 del Mes</li>
+                    </ol><a class="ctk-action" href="contact.html">Involúcrate →</a>
+                  </div>
+                </div>
+              </article>
+              <article aria-label="Fellowship" class="ctk-slide" data-seed="Fellowship" role="group">
+                <div class="ctk-card"><img alt="Fellowship" class="ctk-bg" loading="lazy" />
+                  <div class="ctk-ribbon">
+                    <h2>Fellowship</h2>
+                  </div>
+
+
+
+
+                  <div class="ctk-content">
+                    <ol class="ctk-list">
+                      <li>Knights of Columbus Second Monday 7:30 pm</li>
+                      <li>Damas de Cristo Rey</li>
+                      <li>Catholic Daughters Third Wednesday 5:00 pm</li>
+                    </ol><a class="ctk-action" href="contact.html">Involúcrate →</a>
+                  </div>
+                </div>
+              </article>
+              <article aria-label="Service" class="ctk-slide" data-seed="Service" role="group">
+                <div class="ctk-card"><img alt="Service" class="ctk-bg" loading="lazy" />
+                  <div class="ctk-ribbon">
+                    <h2>Service</h2>
+                  </div>
+
+
+
+
+                  <div class="ctk-content">
+                    <ol class="ctk-list">
+                      <li>Finance Council</li>
+                      <li>Stewardship Council</li>
+                      <li>Parish Development Committee</li>
+                      <li>Festival Committee</li>
+                      <li>Nursing Home</li>
+                      <li>Money Counters</li>
+                      <li>Ushers</li>
+                      <li>Marthas and Servants of Christ the King</li>
+                      <li>Volunteers</li>
+                    </ol><a class="ctk-action" href="contact.html">Involúcrate →</a>
+                  </div>
+                </div>
+              </article>
+              <article aria-label="Mision San Carlos" class="ctk-slide" data-seed="Mision San Carlos" role="group">
+                <div class="ctk-card"><img alt="Mision San Carlos" class="ctk-bg" loading="lazy" />
+                  <div class="ctk-ribbon">
+                    <h2>Mision San Carlos</h2>
+                  </div>
+
+
+
+
+                  <div class="ctk-content">
+                    <ol class="ctk-list">
+                      <li>CCD () / Catecismo</li>
+                      <li>Ministros Extra Ordinarios de la Eucarística</li>
+                      <li>Altar Servers</li>
+                      <li>Acomodadores / Ushers</li>
+                      <li>Voluntarios / Volunteers</li>
+                      <li>Guadalupanas</li>
+                    </ol><a class="ctk-action" href="contact.html">Involúcrate →</a>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+          <button aria-label="Siguiente" class="ctk-nav ctk-next" type="button"><i
+              class="bi bi-chevron-right"></i></button>
+        </div>
+      </div>
+      <div aria-label="Seleccionar ministerio" class="ctk-dots" role="tablist"></div>
+    </div>
+  </section>
+  <footer class="footer mt-5 border-top">
+    <div class="container py-5">
+      <div class="row g-4">
+        <div class="col-lg-3">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <img alt="Christ The King Church Logo" class="brand-logo" height="40" src="assets/data/church-logo.png"
+              width="40" />
+            <div class="lh-sm">
+              <div class="fw-bold">Iglesia Católica Cristo Rey</div>
+              <small class="text-muted">Una comunidad parroquial acogedora.</small>
+            </div>
+          </div>
+          <p class="text-muted small mb-3">Acompáñanos a la Misa, al servicio y a la comunidad. Todos son bienvenidos.
+          </p>
+          <div class="d-flex gap-2">
+            <a aria-label="Facebook" class="social btn btn-outline-dark btn-sm" href="#"><i
+                class="bi bi-facebook"></i></a>
+            <a aria-label="X" class="social btn btn-outline-dark btn-sm" href="#"><i class="bi bi-twitter-x"></i></a>
+            <a aria-label="YouTube" class="social btn btn-outline-dark btn-sm" href="#"><i
+                class="bi bi-youtube"></i></a>
+            <a aria-label="Instagram" class="social btn btn-outline-dark btn-sm" href="#"><i
+                class="bi bi-instagram"></i></a>
+          </div>
+        </div>
+        <div class="col-6 col-lg-3">
+          <h6 class="text-uppercase small fw-bold mb-3">Vida Parroquial</h6>
+          <ul class="list-unstyled footer-list">
+            <li><a class="footer-link" href="worship.html#mass-times">Horario de Misas</a></li>
+            <li><a class="footer-link" href="ministries.html">Ministerios</a></li>
+            <li><a class="footer-link" href="bulletin.html">Boletín</a></li>
+            <li class="nav-item"><a class="nav-link" href="sermons.html">Sermones</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-lg-3">
+          <h6 class="text-uppercase small fw-bold mb-3">Conectar</h6>
+          <ul class="list-unstyled footer-list">
+            <li><a class="footer-link" href="contact.html">Contacto</a></li>
+            <li><a class="footer-link" href="news.html">Noticias</a></li>
+            <li><a class="footer-link" href="giving.html">Online Donar</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-lg-3">
+          <h6 class="text-uppercase small fw-bold mb-3">Más</h6>
+          <ul class="list-unstyled footer-list">
+            <li><a class="footer-link" href="privacy.html">Privacidad</a></li>
+            <li><a class="footer-link" href="accessibility.html">Accesibilidad</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3">
+          <h6 class="text-uppercase small fw-bold mb-3">Dirección</h6>
+          <p class="small text-muted mb-2">
+            1105 Tilden Ave., Laredo, TX 78040<br />
             (956) 723-4267
           </p>
-<a class="btn btn-dark btn-sm w-100" href="https://discovermass.com/church/christ-the-king-laredo-tx/" rel="noopener" target="_blank">
+          <a class="btn btn-dark btn-sm w-100" href="https://discovermass.com/church/christ-the-king-laredo-tx/"
+            rel="noopener" target="_blank">
             Parish listing <i class="bi bi-box-arrow-up-right ms-1"></i>
-</a>
-</div>
-</div>
-<hr class="my-4"/>
-<div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2">
-<div class="small text-muted">© 2026 Iglesia Católica Cristo Rey. Todos los derechos reservados.</div>
-<div class="small text-muted">Hecho con Bootstrap • Imágenes vía Picsum</div>
-</div>
-</div>
-</footer>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-<script src="assets/js/main.js"></script>
-<!-- Google Translate Website Widget (simple language switcher) -->
-<script type="text/javascript">
+          </a>
+        </div>
+      </div>
+      <hr class="my-4" />
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2">
+        <div class="small text-muted">© 2026 Iglesia Católica Cristo Rey. Todos los derechos reservados.</div>
+        <div class="small text-muted">Hecho con Bootstrap • Imágenes vía Picsum</div>
+      </div>
+    </div>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script src="assets/js/main.js"></script>
+  <!-- Google Translate Website Widget (simple language switcher) -->
+  <script type="text/javascript">
     function googleTranslateElementInit() {
       new google.translate.TranslateElement({
         pageLanguage: 'en',
@@ -241,6 +614,127 @@ En los Primeros Viernes de Reparación al Sagrado Corazón de Jesús, oramos por
       }, 'google_translate_element');
     }
   </script>
-<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" type="text/javascript"></script>
+  <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+    type="text/javascript"></script>
+  <script>
+    (function () {
+      const root = document.querySelector('.ctk-carousel');
+      if (!root) return;
+
+      const track = root.querySelector('.ctk-track');
+      const viewport = root.querySelector('.ctk-viewport');
+      const slides = Array.from(root.querySelectorAll('.ctk-slide'));
+      const prevBtn = root.querySelector('.ctk-prev');
+      const nextBtn = root.querySelector('.ctk-next');
+      const dotsWrap = root.querySelector('.ctk-dots');
+
+      let index = 0;
+      let timer = null;
+
+      // Assign Picsum background images (stable per card)
+      slides.forEach((slide, i) => {
+        const seed = encodeURIComponent(slide.getAttribute('data-seed') || slide.getAttribute('aria-label') || `ctk-${i}`);
+        const url = `url(https://picsum.photos/seed/${seed}/900/900)`;
+        const card = slide.querySelector('.ctk-card');
+        if (card) card.style.setProperty('--bg-url', url);
+        const img = slide.querySelector('.ctk-bg');
+        if (img) img.src = `https://picsum.photos/seed/${seed}/900/900`;
+      });
+
+      // Build dots
+      const dots = [];
+      if (dotsWrap) {
+        dotsWrap.innerHTML = '';
+        slides.forEach((slide, i) => {
+          const label = slide.getAttribute('aria-label') || `Slide ${i + 1}`;
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'ctk-dot';
+          b.setAttribute('aria-label', `Ir a: ${label}`);
+          b.addEventListener('click', () => { goTo(i); start(); });
+          dotsWrap.appendChild(b);
+          dots.push(b);
+        });
+      }
+
+      function centerOffsetFor(i) {
+        const s = slides[i];
+        if (!s) return 0;
+        const vp = viewport.getBoundingClientRect();
+        const sRect = s.getBoundingClientRect();
+        const sCenter = (s.offsetLeft + (sRect.width / 2));
+        const vpCenter = (vp.width / 2);
+        return sCenter - vpCenter;
+      }
+
+      function setActive() {
+        slides.forEach((el, i) => el.classList.toggle('is-active', i === index));
+        dots.forEach((d, i) => d.setAttribute('aria-current', i === index ? 'true' : 'false'));
+      }
+
+      function goTo(i) {
+        if (!slides.length) return;
+        index = (i + slides.length) % slides.length;
+        const x = -centerOffsetFor(index);
+        track.style.transform = `translateX(${x}px)`;
+        setActive();
+      }
+
+      function next() { goTo(index + 1); }
+      function prev() { goTo(index - 1); }
+
+      function start() {
+        stop();
+        // Respect reduced-motion users by disabling autoplay.
+        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        timer = setInterval(next, 3500);
+      }
+      function stop() {
+        if (timer) { clearInterval(timer); timer = null; }
+      }
+
+      // Init
+      goTo(0);
+      window.addEventListener('resize', () => goTo(index));
+
+      prevBtn && prevBtn.addEventListener('click', () => { prev(); start(); });
+      nextBtn && nextBtn.addEventListener('click', () => { next(); start(); });
+
+      // Pause on hover (desktop)
+      root.addEventListener('mouseenter', stop);
+      root.addEventListener('mouseleave', start);
+
+      // Keyboard support
+      root.setAttribute('tabindex', '0');
+      root.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); start(); }
+        if (e.key === 'ArrowRight') { e.preventDefault(); next(); start(); }
+        if (e.key === 'Home') { e.preventDefault(); goTo(0); start(); }
+        if (e.key === 'End') { e.preventDefault(); goTo(slides.length - 1); start(); }
+      });
+
+      // Touch / swipe (mobile)
+      let startX = null;
+      root.addEventListener('touchstart', (e) => {
+        if (!e.touches || !e.touches.length) return;
+        startX = e.touches[0].clientX;
+        stop();
+      }, { passive: true });
+      root.addEventListener('touchend', (e) => {
+        if (startX === null) return;
+        const endX = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0].clientX : startX;
+        const dx = endX - startX;
+        startX = null;
+        if (Math.abs(dx) > 40) {
+          (dx > 0) ? prev() : next();
+        }
+        start();
+      });
+
+      // Autoplay
+      start();
+    })();
+  </script>
 </body>
+
 </html>
