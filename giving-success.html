@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 
 <html lang="es">
-<head>
+<head><script>(function(){try{document.documentElement.classList.add('js');var u=new URL(location.href);var l=u.searchParams.get('lang')||localStorage.getItem('ctk_lang');if(!l){l=(navigator.language||'es').toLowerCase().startsWith('en')?'en':'es';}document.documentElement.setAttribute('lang',l);document.documentElement.setAttribute('data-lang',l);}catch(e){}})();</script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Gracias • Iglesia Católica Cristo Rey</title>
+<title data-i18n="pages.giving-success.t001">Gracias • Iglesia Católica Cristo Rey</title>
 <meta content="Cristo Rey Iglesia Católica en Laredo, TX — horarios de Misa, ministerios, noticias, boletín y donaciones." name="description"/>
 <link href="assets/data/church-logo.png" rel="icon" type="image/png"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
@@ -13,21 +13,21 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
 <link href="assets/css/styles.css" rel="stylesheet"/>
-</head>
+<script defer="defer" src="assets/js/i18n.js"></script></head>
 <body>
 <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-white border-bottom">
 <div class="container">
 <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
-<img alt="Christ The King" class="brand-mark" src="assets/data/church-logo.png"/>
-<span class="fw-semibold">Cristo Rey</span>
+<img alt="Cristo Rey" data-i18n-alt="alt.christ_the_king" class="brand-mark" src="assets/data/church-logo.png"/>
+<span class="fw-semibold" data-i18n="pages.giving-success.t002">Cristo Rey</span>
 </a>
-<button aria-controls="nav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#nav" data-bs-toggle="collapse" type="button">
+<button aria-controls="nav" aria-expanded="false" aria-label="Alternar navegación" class="navbar-toggler" data-bs-target="#nav" data-bs-toggle="collapse" data-i18n-aria="pages.giving-success.ar003" type="button">
 <span class="navbar-toggler-icon"></span>
 </button>
 <div class="collapse navbar-collapse" id="nav">
 <ul class="navbar-nav ms-auto">
-<li class="nav-item"><a class="nav-link" href="giving.html">Donar</a></li>
-<li class="nav-item"><a class="nav-link" href="contact.html">Contacto</a></li>
+<li class="nav-item"><a class="nav-link" data-i18n="nav.give" href="giving.html">Donar</a></li>
+<li class="nav-item"><a class="nav-link" data-i18n="nav.contact" href="contact.html">Contacto</a></li>
 </ul>
 </div>
 </div>
@@ -39,19 +39,17 @@
 <div class="card-soft p-4 p-md-5">
 <div class="d-flex align-items-center gap-2 mb-2">
 <i class="bi bi-check-circle-fill fs-4"></i>
-<h1 class="section-title mb-0">Gracias por tu donación</h1>
+<h1 class="section-title mb-0" data-i18n="pages.giving-success.t004">Gracias por tu donación</h1>
 </div>
-<p class="section-lead mb-4">
-            Tu generosidad apoya la misión y los ministerios de nuestra parroquia.
-          </p>
+<p class="section-lead mb-4" data-i18n="pages.giving-success.t005">Tu generosidad apoya la misión y los ministerios de nuestra parroquia.</p>
 <div class="border rounded-4 p-3 p-md-4 bg-white" id="receiptBox">
-<div class="text-muted small">Loading receipt details…</div>
+<div class="text-muted small" data-i18n="pages.giving-success.t006">Cargando detalles del recibo…</div>
 </div>
 <div class="d-flex flex-column flex-sm-row gap-2 mt-4">
-<a class="btn btn-dark" href="index.html"><i class="bi bi-house-door me-1"></i>Regresar a Inicio</a>
-<a class="btn btn-outline-dark" href="giving.html"><i class="bi bi-heart me-1"></i> Give again</a>
+<a class="btn btn-dark" href="index.html"><i class="bi bi-house-door me-1"></i><span data-i18n="pages.giving-success.auto_regresar_a_inicio">Regresar a Inicio</span></a>
+<a class="btn btn-outline-dark" href="giving.html"><i class="bi bi-heart me-1"></i><span data-i18n="pages.giving-success.t010">Donar de nuevo</span></a>
 </div>
-<p class="text-muted small mt-4 mb-0">¿Necesitas ayuda? Comunícate con la oficina parroquial.</p>
+<p class="text-muted small mt-4 mb-0" data-i18n="pages.giving-success.t007">¿Necesitas ayuda? Comunícate con la oficina parroquial.</p>
 </div>
 </div>
 </div>
@@ -59,7 +57,13 @@
 </section>
 <footer class="border-top">
 <div class="container py-4">
-<div class="small text-muted">© 2026 Iglesia Católica Cristo Rey. Todos los derechos reservados.</div>
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2 small mb-2">
+<div class="text-muted" data-i18n-html="footer.diocese_blurb">Nuestra parroquia pertenece a la .</div>
+<a class="btn btn-outline-dark btn-sm" href="https://dioceseoflaredo.org/" rel="noopener" target="_blank">
+<span data-i18n="footer.diocese_button">Visitar Diócesis</span> <i class="bi bi-box-arrow-up-right ms-1"></i>
+</a>
+</div>
+<div class="small text-muted" data-i18n="pages.giving-success.t009">© 2026 Iglesia Católica Cristo Rey. Todos los derechos reservados.</div>
 </div>
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -67,6 +71,10 @@
   (function () {
     // GitHub Pages frontend -> Netlify backend
     const BACKEND_BASE = "https://christ-the-king-stripe-server.netlify.app";
+
+    const t = (k, f = "") => (window.CTK_I18N ? window.CTK_I18N.t(k, f) : (f || ""));
+    const getLang = () => (window.CTK_I18N && window.CTK_I18N.getLang ? window.CTK_I18N.getLang() : (document.documentElement.getAttribute("lang") || "es"));
+    const getLocale = () => (getLang() === "en" ? "en-US" : "es-MX");
 
     const box = document.getElementById("receiptBox");
     const params = new URLSearchParams(window.location.search);
@@ -88,24 +96,100 @@
 
     const prettyStatus = (s) => {
       const val = (s || "").toString().toLowerCase();
-      if (!val) return "Unknown";
-      if (val === "paid") return "Paid";
-      if (val === "unpaid") return "Unpaid";
-      if (val === "no_payment_required") return "No payment required";
+      if (!val) return t("js.receipt.status_unknown", "Unknown");
+      if (val === "paid") return t("js.receipt.status_paid", "Paid");
+      if (val === "unpaid") return t("js.receipt.status_unpaid", "Unpaid");
+      if (val === "no_payment_required") return t("js.receipt.status_no_payment_required", "No payment required");
+      // fallback: best-effort humanization
       return val.replaceAll("_", " ").replace(/\b\w/g, c => c.toUpperCase());
     };
 
     const prettyFrequency = (f) => {
       const val = (f || "").toString().toLowerCase();
-      if (!val) return "One-time";
-      if (val === "one_time" || val === "one-time") return "One-time";
-      if (val === "week" || val === "weekly") return "Weekly";
-      if (val === "month" || val === "monthly") return "Monthly";
+      if (!val) return t("js.receipt.freq_one_time", "One-time");
+      if (val === "one_time" || val === "one-time") return t("js.receipt.freq_one_time", "One-time");
+      if (val === "week" || val === "weekly") return t("js.receipt.freq_weekly", "Weekly");
+      if (val === "month" || val === "monthly") return t("js.receipt.freq_monthly", "Monthly");
       return val.replaceAll("_", " ").replace(/\b\w/g, c => c.toUpperCase());
     };
 
+    const normalizeFund = (fund) => {
+      const f = (fund || "").trim();
+      if (!f) return t("js.receipt.fund_general_offertory", "General Offertory");
+      if (f.toLowerCase() === "general offertory") return t("js.receipt.fund_general_offertory", "General Offertory");
+      return f; // unknown/custom fund name
+    };
+
+    // Keep last fetched data so we can re-render if language changes
+    let lastData = null;
+
+    const render = (data) => {
+      const rawName =
+        data?.customer_details?.name ||
+        data?.customer_details?.billing_details?.name ||
+        data?.metadata?.donorName ||
+        "";
+
+      const name = rawName ? rawName : t("js.receipt.anonymous_donor", "Anonymous Donor");
+
+      const rawEmail =
+        data?.customer_email ||
+        data?.customer_details?.email ||
+        "";
+
+      const email = rawEmail ? rawEmail : t("js.receipt.none", "None");
+
+      // Fund/Frequency are best pulled from metadata (set during Checkout Session creation)
+      const fund = normalizeFund(data?.metadata?.fund);
+      const frequency = prettyFrequency(data?.metadata?.frequency);
+
+      const status = prettyStatus(data?.payment_status || data?.status);
+      const amountStr = formatMoney(data?.amount_total, data?.currency);
+
+      box.innerHTML = `
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+          <div class="fw-semibold">${escapeHtml(t("js.receipt.title", "Donation Receipt"))}</div>
+          <span class="badge text-bg-light border">
+            <i class="bi bi-shield-check me-1"></i> ${escapeHtml(t("js.receipt.verified", "Verified"))}
+          </span>
+        </div>
+
+        <div class="row g-2 small">
+          <div class="col-12 col-md-6">
+            <div class="text-muted">${escapeHtml(t("js.receipt.label_status", "Status"))}</div>
+            <div class="fw-semibold">${escapeHtml(status)}</div>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <div class="text-muted">${escapeHtml(t("js.receipt.label_name", "Name"))}</div>
+            <div class="fw-semibold">${escapeHtml(name)}</div>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <div class="text-muted">${escapeHtml(t("js.receipt.label_amount", "Amount"))}</div>
+            <div class="fw-semibold">${amountStr ? escapeHtml(amountStr) : "—"}</div>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <div class="text-muted">${escapeHtml(t("js.receipt.label_email", "Email"))}</div>
+            <div class="fw-semibold">${escapeHtml(email)}</div>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <div class="text-muted">${escapeHtml(t("js.receipt.label_fund", "Fund"))}</div>
+            <div class="fw-semibold">${escapeHtml(fund)}</div>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <div class="text-muted">${escapeHtml(t("js.receipt.label_frequency", "Frequency"))}</div>
+            <div class="fw-semibold">${escapeHtml(frequency)}</div>
+          </div>
+        </div>
+      `;
+    };
+
     if (!sessionId) {
-      box.innerHTML = '<div class="text-danger fw-semibold">Missing session details.</div>';
+      box.innerHTML = `<div class="text-danger fw-semibold">${escapeHtml(t("js.receipt.missing_session_details", "Missing session details."))}</div>`;
       return;
     }
 
@@ -117,80 +201,29 @@
         try { data = await r.json(); } catch (_) {}
 
         if (!r.ok) {
-          const msg = (data && data.error) ? data.error : `Request failed (${r.status})`;
-          throw new Error(msg);
+          // Don't show raw server message (may be English); keep it in console.
+          console.warn("Receipt fetch failed:", r.status, data);
+          throw new Error("RECEIPT_FETCH_FAILED");
         }
-        if (data.error) throw new Error(data.error);
+        if (data.error) {
+          console.warn("Receipt error:", data.error);
+          throw new Error("RECEIPT_FETCH_FAILED");
+        }
         return data;
       })
       .then(data => {
-        const rawName =
-          data?.customer_details?.name ||
-          data?.customer_details?.billing_details?.name ||
-          data?.metadata?.donorName ||
-          "";
-
-        const name = rawName ? rawName : "Anonymous Donor";
-
-        const rawEmail =
-          data?.customer_email ||
-          data?.customer_details?.email ||
-          "";
-
-        const email = rawEmail ? rawEmail : "None";
-
-        // Fund/Frequency are best pulled from metadata (set during Checkout Session creation)
-        const fund = (data?.metadata?.fund || "").trim() || "General Offertory";
-        const frequency = prettyFrequency(data?.metadata?.frequency);
-
-        const status = prettyStatus(data.payment_status || data.status);
-        const amountStr = formatMoney(data.amount_total, data.currency);
-
-        box.innerHTML = `
-          <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
-            <div class="fw-semibold">Donation Receipt</div>
-            <span class="badge text-bg-light border">
-              <i class="bi bi-shield-check me-1"></i> Verified
-            </span>
-          </div>
-
-          <div class="row g-2 small">
-            <div class="col-12 col-md-6">
-              <div class="text-muted">Status</div>
-              <div class="fw-semibold">${escapeHtml(status)}</div>
-            </div>
-
-            <div class="col-12 col-md-6">
-              <div class="text-muted">Name</div>
-              <div class="fw-semibold">${escapeHtml(name)}</div>
-            </div>
-
-            <div class="col-12 col-md-6">
-              <div class="text-muted">Amount</div>
-              <div class="fw-semibold">${amountStr ? escapeHtml(amountStr) : "—"}</div>
-            </div>
-
-            <div class="col-12 col-md-6">
-              <div class="text-muted">Email</div>
-              <div class="fw-semibold">${escapeHtml(email)}</div>
-            </div>
-
-            <div class="col-12 col-md-6">
-              <div class="text-muted">Fund</div>
-              <div class="fw-semibold">${escapeHtml(fund)}</div>
-            </div>
-
-            <div class="col-12 col-md-6">
-              <div class="text-muted">Frequency</div>
-              <div class="fw-semibold">${escapeHtml(frequency)}</div>
-            </div>
-          </div>
-        `;
+        lastData = data;
+        render(data);
       })
       .catch(err => {
         console.error(err);
-        box.innerHTML = '<div class="text-danger fw-semibold">Could not load receipt details.</div>';
+        box.innerHTML = `<div class="text-danger fw-semibold">${escapeHtml(t("js.receipt.load_error", "Could not load receipt details."))}</div>`;
       });
+
+    // If user toggles language after the receipt is loaded, re-render labels
+    window.addEventListener("ctk:langchange", () => {
+      if (lastData) render(lastData);
+    });
   })();
 </script>
 </body>

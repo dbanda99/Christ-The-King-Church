@@ -1,3 +1,5 @@
+html.js:not(.i18n-ready) body{opacity:0;transition:opacity .15s ease-in;}
+html.i18n-ready body{opacity:1;}
 :root{
   --ctk-bg: #ffffff;
   --ctk-text: #0c0c0c;
@@ -163,6 +165,50 @@ html, body{
   .page-home .ctk-navbar:not(.nav-scrolled) .navbar-collapse .btn-outline-dark:hover{
     background: rgba(255,255,255,.14);
   }
+}
+
+/* Language dropdown (navbar) */
+
+/* Language button on light navbars (all inner pages) */
+.navbar-light .lang-wrap .btn{
+  border-color: rgba(0,0,0,.22) !important;
+  color: #111 !important;
+  background: transparent !important;
+}
+.navbar-light .lang-wrap .btn:hover{
+  background: rgba(0,0,0,.06) !important;
+}
+
+.ctk-navbar .lang-wrap .dropdown-menu{
+  min-width: 190px;
+}
+.ctk-navbar .lang-wrap .dropdown-item{
+  border-radius: 10px;
+}
+.ctk-navbar .lang-wrap .dropdown-item:active{
+  background: rgba(0,0,0,.06);
+  color: inherit;
+}
+.ctk-navbar .lang-wrap .lang-check{
+  width: 1.1rem;
+}
+
+/* Home hero: navbar not scrolled (dark glass) */
+.page-home .ctk-navbar:not(.nav-scrolled) .lang-wrap .btn{
+  border-color: rgba(255,255,255,.55);
+  color: #ffffff;
+}
+.page-home .ctk-navbar:not(.nav-scrolled) .lang-wrap .btn:hover{
+  background: rgba(255,255,255,.14);
+}
+
+/* Home hero: when scrolled (light) */
+.page-home .ctk-navbar.nav-scrolled .lang-wrap .btn{
+  border-color: rgba(0,0,0,.22);
+  color: #111;
+}
+.page-home .ctk-navbar.nav-scrolled .lang-wrap .btn:hover{
+  background: var(--ctk-soft);
 }
 
 /* Fullscreen hero */

@@ -64,16 +64,20 @@ window.CTK_YT = window.CTK_YT || {
         if (url && url.startsWith("http")) {
           window.open(url, "_blank", "noopener");
         } else {
-          alert("Set your Stripe Payment Link URL in giving.html (data-payment-link).");
+          alert((window.CTK_I18N ? window.CTK_I18N.t("js.giving.missing_payment_link", "Set your Stripe Payment Link URL in giving.html (data-payment-link).") : "Set your Stripe Payment Link URL in giving.html (data-payment-link)."));
         }
       });
     }
   }
 
   // Sermons page: auto-detect live status via YouTube Data API, fallback to latest upload, then show archive
-  function initSermonsPage(){
+  function initSermonsPage() {
     const page = document.getElementById("sermonsPage");
     if (!page) return;
+
+    const t = (k, f = "") => (window.CTK_I18N ? window.CTK_I18N.t(k, f) : (f || ""));
+    const getLang = () => (window.CTK_I18N && window.CTK_I18N.getLang ? window.CTK_I18N.getLang() : (document.documentElement.getAttribute("lang") || "es"));
+    const getLocale = () => (getLang() === "en" ? "en-US" : "es-MX");
 
     const cfg = window.CTK_YT || {};
     const apiKey = (cfg.apiKey || "").trim();
@@ -98,68 +102,134 @@ window.CTK_YT = window.CTK_YT || {
     const state = {
       videos: [],
       nextPageToken: null,
-      loading: false
+      loading: false,
+      featuredMode: null,      // "live" | "latest" | "checking" | "config" | "error"
+      featuredTitle: "",
+      featuredDate: "",
+      statusKey: null,
+      statusFallback: ""
     };
 
-    function setStatus(msg, show){
+    function setStatusText(msg, show) {
       if (!els.sermonStatus) return;
+      state.statusKey = null;
+      state.statusFallback = "";
       els.sermonStatus.textContent = msg || "";
       els.sermonStatus.classList.toggle("d-none", !show);
     }
 
-    function ytUrl(params){
+    function setStatusKey(key, show, fallback = "") {
+      if (!els.sermonStatus) return;
+      state.statusKey = key;
+      state.statusFallback = fallback || "";
+      els.sermonStatus.textContent = t(key, fallback);
+      els.sermonStatus.classList.toggle("d-none", !show);
+    }
+
+    function refreshDynamicStrings() {
+      // Channel label
+      if (els.channelLabel) {
+        els.channelLabel.removeAttribute("data-i18n");
+        els.channelLabel.textContent = t("js.youtube.channel_label", "YouTube • Channel");
+      }
+
+      // Featured heading/sub (these are dynamic; avoid having i18n overwrite them later)
+      if (els.liveHeading) els.liveHeading.removeAttribute("data-i18n");
+      if (els.liveSub) els.liveSub.removeAttribute("data-i18n");
+
+      if (els.liveHeading) {
+        if (state.featuredMode === "live") els.liveHeading.textContent = t("js.youtube.heading_live", "Live");
+        else if (state.featuredMode === "latest") els.liveHeading.textContent = t("js.youtube.heading_latest", "Latest Sermon");
+        else els.liveHeading.textContent = t("js.youtube.heading_checking", "Checking…");
+      }
+
+      if (els.liveSub) {
+        if (state.featuredMode === "live") els.liveSub.textContent = t("js.youtube.sub_live", "We’re live now—join the stream below.");
+        else if (state.featuredMode === "latest") els.liveSub.textContent = t("js.youtube.sub_latest", "Not live right now—here’s the most recent sermon.");
+        else if (state.featuredMode === "config") els.liveSub.textContent = t("js.youtube.missing_config", "Add your YouTube API key and channel ID to enable live detection.");
+        else if (state.featuredMode === "error") els.liveSub.textContent = t("js.youtube.load_error", "Couldn't load videos. Check your YouTube API key and channel ID.");
+        else els.liveSub.textContent = t("js.youtube.sub_checking", "Checking live status…");
+      }
+
+      // Featured meta (title + date stays the same; date format depends on locale)
+      if (els.featuredMeta && state.featuredTitle) {
+        const meta = state.featuredTitle + (state.featuredDate ? (" • " + state.featuredDate) : "");
+        els.featuredMeta.textContent = meta;
+      }
+
+      // Status line
+      if (state.statusKey) {
+        els.sermonStatus.textContent = t(state.statusKey, state.statusFallback);
+      }
+    }
+
+    function ytUrl(params) {
       const u = new URL("https://www.googleapis.com/youtube/v3/search");
-      Object.entries(params).forEach(([k,v])=>u.searchParams.set(k,String(v)));
+      Object.entries(params).forEach(([k, v]) => u.searchParams.set(k, String(v)));
       return u.toString();
     }
 
-    async function ytFetch(params){
+    async function ytFetch(params) {
       if (!apiKey || !channelId) throw new Error("YT_NOT_CONFIGURED");
       const url = ytUrl({ key: apiKey, channelId, ...params });
       const res = await fetch(url);
-      const data = await res.json();
+      const data = await res.json().catch(() => ({}));
       if (!res.ok) {
-        const msg = (data && data.error && data.error.message) ? data.error.message : "YouTube API error.";
-        throw new Error(msg);
+        // Keep raw error in console, but show a translated message in UI
+        console.warn("[YouTube]", data);
+        throw new Error("YT_API_ERROR");
       }
       return data;
     }
 
-    function renderFeatured(video, mode){
+    function renderFeatured(video, mode) {
       // mode: "live" | "latest"
       if (!video) return;
+
       const videoId = video.id && (video.id.videoId || video.id);
-      const title = video.snippet?.title || "Sermon";
+      const title = video.snippet?.title || t("js.youtube.fallback_title", "Sermon");
       const publishedAt = video.snippet?.publishedAt ? new Date(video.snippet.publishedAt) : null;
+      const dateStr = publishedAt
+        ? publishedAt.toLocaleDateString(getLocale(), { year: "numeric", month: "short", day: "numeric" })
+        : "";
 
-      const iframe = document.createElement("iframe");
-      iframe.src = "https://www.youtube.com/embed/" + encodeURIComponent(videoId) + "?rel=0&modestbranding=1";
-      iframe.title = title;
-      iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-      iframe.allowFullscreen = true;
+      state.featuredMode = mode;
+      state.featuredTitle = title;
+      state.featuredDate = dateStr;
 
-      els.featuredPlaceholder.replaceWith(iframe);
+      // Replace placeholder with iframe once
+      if (els.featuredPlaceholder && els.featuredPlaceholder.tagName) {
+        const iframe = document.createElement("iframe");
+        iframe.src = "https://www.youtube.com/embed/" + encodeURIComponent(videoId) + "?rel=0&modestbranding=1";
+        iframe.title = title;
+        iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+        iframe.allowFullscreen = true;
 
-      if (els.liveHeading) els.liveHeading.textContent = (mode === "live") ? "En Vivo" : "Sermón más reciente";
-      if (els.liveSub) els.liveSub.textContent = (mode === "live")
-        ? "Actualmente estamos en vivo: únete a la transmisión a continuación"
-        : "No en vivo ahora: aquí está el último sermón.";
+        els.featuredPlaceholder.replaceWith(iframe);
+        // Prevent double-replace
+        els.featuredPlaceholder = null;
+      }
 
-      const dateStr = publishedAt ? publishedAt.toLocaleDateString(undefined, { year:"numeric", month:"short", day:"numeric" }) : "";
-      if (els.featuredMeta) els.featuredMeta.textContent = title + (dateStr ? (" • " + dateStr) : "");
+      if (els.featuredMeta) {
+        els.featuredMeta.textContent = title + (dateStr ? (" • " + dateStr) : "");
+      }
 
       if (els.featuredOpen) {
         els.featuredOpen.href = "https://www.youtube.com/watch?v=" + encodeURIComponent(videoId);
         els.featuredOpen.classList.remove("d-none");
       }
+
+      refreshDynamicStrings();
     }
 
-    function videoCard(video){
+    function videoCard(video) {
       const videoId = video.id?.videoId || video.id;
-      const title = video.snippet?.title || "Sermon";
+      const title = video.snippet?.title || t("js.youtube.fallback_title", "Sermon");
       const thumb = video.snippet?.thumbnails?.high?.url || video.snippet?.thumbnails?.medium?.url || "";
       const publishedAt = video.snippet?.publishedAt ? new Date(video.snippet.publishedAt) : null;
-      const dateStr = publishedAt ? publishedAt.toLocaleDateString(undefined, { year:"numeric", month:"short", day:"numeric" }) : "";
+      const dateStr = publishedAt
+        ? publishedAt.toLocaleDateString(getLocale(), { year: "numeric", month: "short", day: "numeric" })
+        : "";
 
       const col = document.createElement("div");
       col.className = "col-12 col-sm-6 col-lg-4";
@@ -179,7 +249,7 @@ window.CTK_YT = window.CTK_YT || {
       return col;
     }
 
-    function applyFilters(){
+    function applyFilters() {
       const q = (els.sermonSearch?.value || "").trim().toLowerCase();
       const sort = els.sermonSort?.value || "date_desc";
 
@@ -190,9 +260,9 @@ window.CTK_YT = window.CTK_YT || {
       }
 
       const getDate = (v) => v.snippet?.publishedAt ? new Date(v.snippet.publishedAt).getTime() : 0;
-      if (sort === "date_desc") list.sort((a,b)=>getDate(b)-getDate(a));
-      if (sort === "date_asc") list.sort((a,b)=>getDate(a)-getDate(b));
-      if (sort === "title_asc") list.sort((a,b)=>(a.snippet?.title||"").localeCompare(b.snippet?.title||""));
+      if (sort === "date_desc") list.sort((a, b) => getDate(b) - getDate(a));
+      if (sort === "date_asc") list.sort((a, b) => getDate(a) - getDate(b));
+      if (sort === "title_asc") list.sort((a, b) => (a.snippet?.title || "").localeCompare(b.snippet?.title || ""));
 
       if (els.sermonGrid) {
         els.sermonGrid.innerHTML = "";
@@ -200,12 +270,13 @@ window.CTK_YT = window.CTK_YT || {
       }
     }
 
-    async function loadArchive(next){
+    async function loadArchive(next) {
       if (state.loading) return;
       state.loading = true;
 
-      try{
-        setStatus("Cargando sermones…", true);
+      try {
+        setStatusKey("js.youtube.loading_archive", true, "Loading sermons…");
+
         const data = await ytFetch({
           part: "snippet",
           type: "video",
@@ -217,6 +288,7 @@ window.CTK_YT = window.CTK_YT || {
         state.nextPageToken = data.nextPageToken || null;
 
         const items = (data.items || []).filter(it => it.id && it.id.videoId);
+
         // Avoid duplicates (live might also appear in uploads)
         const seen = new Set(state.videos.map(v => v.id.videoId));
         items.forEach(it => { if (!seen.has(it.id.videoId)) state.videos.push(it); });
@@ -227,23 +299,30 @@ window.CTK_YT = window.CTK_YT || {
           els.loadMoreBtn.classList.toggle("d-none", !state.nextPageToken);
         }
 
-        setStatus(state.videos.length ? "" : "No se encontraron videos todavía", !state.videos.length);
+        if (!state.videos.length) setStatusKey("js.youtube.no_videos", true, "No videos found yet.");
+        else setStatusText("", false);
+      } catch (_) {
+        setStatusKey("js.youtube.archive_error", true, "Could not load the sermon archive.");
       } finally {
         state.loading = false;
       }
     }
 
-    async function detectLive(){
+    async function detectLive() {
+      state.featuredMode = "checking";
+      refreshDynamicStrings();
+
       if (!apiKey || !channelId) {
         if (els.ytConfigAlert) els.ytConfigAlert.classList.remove("d-none");
-        if (els.liveSub) els.liveSub.textContent = "Agrega tu clave de API de YouTube y el ID del canal para habilitar la detección en vivo.";
-        setStatus("Sermon archive requires YouTube API configuration.", true);
+        state.featuredMode = "config";
+        setStatusKey("js.youtube.requires_config", true, "Sermon archive requires YouTube API configuration.");
+        refreshDynamicStrings();
         return;
       }
 
-      if (els.channelLabel) els.channelLabel.textContent = "YouTube • Canal";
+      if (els.ytConfigAlert) els.ytConfigAlert.classList.add("d-none");
 
-      try{
+      try {
         // 1) Live search
         const live = await ytFetch({
           part: "snippet",
@@ -269,10 +348,12 @@ window.CTK_YT = window.CTK_YT || {
 
         // Load archive (first page)
         await loadArchive(false);
-      } catch (err){
-        if (els.liveSub) els.liveSub.textContent = "No se pudieron cargar los videos. Verifica tu clave de API de YouTube y el ID del canal.";
-        setStatus(String(err?.message || err), true);
+      } catch (err) {
+        console.error(err);
+        state.featuredMode = "error";
         if (els.ytConfigAlert) els.ytConfigAlert.classList.remove("d-none");
+        setStatusKey("js.youtube.load_error", true, "Couldn't load videos. Check your YouTube API key and channel ID.");
+        refreshDynamicStrings();
       }
     }
 
@@ -280,6 +361,19 @@ window.CTK_YT = window.CTK_YT || {
     els.loadMoreBtn?.addEventListener("click", () => loadArchive(true));
     els.sermonSearch?.addEventListener("input", () => applyFilters());
     els.sermonSort?.addEventListener("change", () => applyFilters());
+
+    // Re-render dynamic strings if language changes after the page loads
+    window.addEventListener("ctk:langchange", () => {
+      // Reformat dates for current locale
+      if (state.featuredTitle) {
+        // No raw date stored; keep existing formatted string (it’s OK), but update labels
+        refreshDynamicStrings();
+      } else {
+        refreshDynamicStrings();
+      }
+      // Re-render cards so date locale updates
+      if (state.videos.length) applyFilters();
+    });
 
     // Kick off
     detectLive();
