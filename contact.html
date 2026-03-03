@@ -23,7 +23,28 @@
 <script defer="defer" src="assets/js/i18n.js"></script><style>
 html[data-lang="es"] .lang-en{display:none !important;}
 html[data-lang="en"] .lang-es{display:none !important;}
-.contact-clergy-card img{display:block;width:100%;height:auto;border-radius:18px;object-fit:cover;}
+.contact-clergy-card img,.contact-clergy-photo img,.contact-location-card img{display:block;width:100%;height:auto;border-radius:18px;object-fit:cover;}
+.contact-clergy-card,.contact-clergy-photo,.contact-location-card{height:100%;}
+.contact-clergy-card,.contact-clergy-photo{min-height:380px;}
+.contact-clergy-card{display:flex;align-items:center;padding:clamp(2rem,3vw,3rem) !important;}
+.contact-clergy-card .clergy-copy{width:100%;max-width:460px;}
+.contact-clergy-photo{padding:14px !important;display:flex;}
+.contact-clergy-photo img{width:100%;height:100%;min-height:350px;max-height:350px;object-fit:cover;}
+.contact-secondary-row > [class*="col-"]{display:flex;}
+.contact-secondary-col{display:flex;flex-direction:column;gap:1.25rem;width:100%;height:100%;}
+.contact-info-card,.contact-form-card{flex:1 1 auto;}
+.contact-info-card{display:flex;flex-direction:column;justify-content:flex-start;}
+.contact-form-card{display:flex;flex-direction:column;justify-content:flex-start;min-height:100%;}
+.contact-form-card form{flex:1 1 auto;}
+.contact-split-title{margin-bottom:1.1rem;}
+.contact-split-title .section-title{margin-bottom:.5rem;}
+.contact-location-card{padding:14px !important;}
+.contact-location-card img{border-radius:16px;max-height:420px;min-height:320px;object-fit:cover;}
+@media (max-width: 991.98px){
+  .contact-clergy-card,.contact-clergy-photo{min-height:auto;}
+  .contact-clergy-photo img{max-height:none;min-height:260px;}
+  .contact-secondary-row > [class*="col-"]{display:block;}
+}
 </style></head>
 <body>
 <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-white border-bottom">
@@ -69,11 +90,36 @@ html[data-lang="en"] .lang-es{display:none !important;}
 </nav>
 <section class="section">
 <div class="container">
-<div class="row align-items-start g-4">
-<div class="col-lg-5" data-aos="fade-right">
+<div class="row align-items-stretch g-4 mb-1">
+<div class="col-lg-6" data-aos="fade-right" data-aos-delay="50">
+<div class="card-soft p-4 contact-clergy-card">
+<div class="clergy-copy">
+<p class="mb-1"><span class="lang-es">Pastor Rev Toribio C. Guerrero</span><span class="lang-en">Pastor Rev. Toribio C. Guerrero</span></p>
+<p class="mb-3"><span class="lang-es">Vicario Parroquial Rev. Juan Mercado</span><span class="lang-en">Parochial Vicar Rev. Juan Mercado</span></p>
+<div class="fw-bold mb-2"><span class="lang-es">Diáconos</span><span class="lang-en">Deacons</span></div>
+<p class="mb-1">Rev. Mr. Alberto De Jesús Brizuela</p>
+<p class="mb-4">Rev. Mr. Marte Avila</p>
+<p class="mb-1"><strong><span class="lang-es">Teléfono:</span><span class="lang-en">Phone:</span></strong> 956-723-4267</p>
+<p class="mb-1"><strong>Fax:</strong> 956-723-5754</p>
+<p class="mb-0"><strong>Email:</strong> <a href="mailto:sec@christthekinglaredo.org">sec@christthekinglaredo.org</a></p>
+</div>
+</div>
+</div>
+<div class="col-lg-6" data-aos="fade-left" data-aos-delay="50">
+<div class="card-soft p-3 contact-clergy-photo">
+<img alt="Clergy photo" class="img-fluid" src="assets/data/contact/clergy-photo.png"/>
+</div>
+</div>
+</div>
+
+<div class="row align-items-stretch g-4 contact-secondary-row">
+<div class="col-lg-6" data-aos="fade-right">
+<div class="contact-secondary-col">
+<div class="contact-split-title">
 <h1 class="section-title" data-i18n="pages.contact.t003">Contacto</h1>
 <p class="section-lead" data-i18n="pages.contact.t004">¿Tienes una pregunta? ¿Quieres registrarte como feligrés? Nos encantaría saber de ti.</p>
-<div class="card-soft p-4">
+</div>
+<div class="card-soft p-4 contact-info-card">
 <div class="d-flex gap-3 align-items-start mb-3">
 <div class="icon-pill"><i class="bi bi-geo-alt"></i></div>
 <div>
@@ -99,14 +145,14 @@ html[data-lang="en"] .lang-es{display:none !important;}
 <strong data-i18n="pages.contact.t013">Dirección:</strong><span data-i18n="pages.contact.auto_1118_hendricks_ave">1118 Hendricks Ave.</span><br/>
 <strong data-i18n="pages.contact.t014">Horario:</strong><br/><span data-i18n="pages.contact.auto_s_bado_1_30_pm_5_00_pm">Sábado: 1:30 pm – 5:00 pm</span><br/><span data-i18n="pages.contact.auto_domingo_10_00_am_1_00_pm">Domingo: 10:00 am – 1:00 pm</span><br/><span data-i18n="pages.contact.auto_lunes_y_martes_1_00_pm_6_00_pm">Lunes y Martes: 1:00 pm – 6:00 pm</span></div>
 </div>
-<div class="notice mt-3">
+<div class="notice">
 <div class="fw-bold mb-1" data-i18n="pages.contact.t015">Unción de los Enfermos (emergencias)</div>
-<div class="small text-muted" data-i18n="pages.contact.t016">Llama a la oficina parroquial o sigue el procedimiento parroquial para
-              emergencias.</div>
+<div class="small text-muted" data-i18n="pages.contact.t016">Llama a la oficina parroquial o sigue el procedimiento parroquial para emergencias.</div>
 </div>
 </div>
-<div class="col-lg-7" data-aos="fade-left">
-<div class="card-soft p-4">
+</div>
+<div class="col-lg-6" data-aos="fade-left">
+<div class="card-soft p-4 contact-form-card">
 <h2 class="h5 mb-3" data-i18n="pages.contact.t017">Envíanos un mensaje</h2>
 <form id="contactForm">
 <div class="row g-3">
@@ -135,29 +181,17 @@ html[data-lang="en"] .lang-es{display:none !important;}
 <a class="btn btn-outline-dark" href="mailto:cre@christthekinglaredo.org"><i class="bi bi-envelope me-1"></i><span data-i18n="pages.contact.auto_escribir_por_correo">Escribir por correo</span></a>
 </div>
 <div class="col-12">
-<small class="text-muted" data-i18n="pages.contact.t023">Formulario de demostración: conecta a un servicio de correo o backend
-                    después.</small>
+<small class="text-muted" data-i18n="pages.contact.t023">Formulario de demostración: conecta a un servicio de correo o backend después.</small>
 </div>
 </div>
 </form>
 </div>
 </div>
-<div class="row align-items-start g-4 mt-1">
-<div class="col-lg-5" data-aos="fade-right" data-aos-delay="100">
-<div class="card-soft p-4 contact-clergy-card">
-<p class="mb-1"><span class="lang-es">Pastor Rev Toribio C. Guerrero</span><span class="lang-en">Pastor Rev. Toribio C. Guerrero</span></p>
-<p class="mb-3"><span class="lang-es">Vicario Parroquial Rev. Juan Mercado</span><span class="lang-en">Parochial Vicar Rev. Juan Mercado</span></p>
-<div class="fw-bold mb-2"><span class="lang-es">Diáconos</span><span class="lang-en">Deacons</span></div>
-<p class="mb-1">Rev. Mr. Alberto De Jesús Brizuela</p>
-<p class="mb-4">Rev. Mr. Marte Avila</p>
-<p class="mb-1"><strong><span class="lang-es">Teléfono:</span><span class="lang-en">Phone:</span></strong> 956-723-4267</p>
-<p class="mb-1"><strong>Fax:</strong> 956-723-5754</p>
-<p class="mb-3"><strong>Email:</strong> <a href="mailto:sec@christthekinglaredo.org">sec@christthekinglaredo.org</a></p>
-<img alt="Clergy photo" class="img-fluid mt-2" src="assets/data/contact/clergy-photo.png"/>
 </div>
-</div>
-<div class="col-lg-7" data-aos="fade-left" data-aos-delay="100">
-<div class="card-soft p-3">
+
+<div class="row mt-4">
+<div class="col-12" data-aos="fade-up" data-aos-delay="100">
+<div class="card-soft p-3 contact-location-card">
 <img alt="Imagen de la oficina" data-i18n-alt="alt.office_image" class="img-fluid rounded" src="assets/data/contact/office-img.png"/>
 <div class="ratio ratio-21x9 mt-3" style="border-radius: 18px; overflow:hidden; border:1px solid var(--ctk-border);">
 <iframe allowfullscreen="" height="450" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3538.8216360879273!2d-99.48992272401321!3d27.505922034345666!2m3!1f0!2f0!3f0!2m3!1i1024!2i768!4f13.1!3m3!1m2!1s0x866123d87aca3219%3A0xaea43c18222149d5!2s1105%20Tilden%20Ave%2C%20Laredo%2C%20TX%2078040!5e0!3m2!1sen!2sus!4v1771526984975!5m2!1sen!2sus" style="border:0;" width="600"></iframe>
