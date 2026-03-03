@@ -20,7 +20,11 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
 <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
 <link href="assets/css/styles.css" rel="stylesheet"/>
-<script defer="defer" src="assets/js/i18n.js"></script></head>
+<script defer="defer" src="assets/js/i18n.js"></script><style>
+html[data-lang="es"] .lang-en{display:none !important;}
+html[data-lang="en"] .lang-es{display:none !important;}
+.contact-clergy-card img{display:block;width:100%;height:auto;border-radius:18px;object-fit:cover;}
+</style></head>
 <body>
 <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-white border-bottom">
 <div class="container">
@@ -137,10 +141,26 @@
 </div>
 </form>
 </div>
-<div class="card-soft p-3 mt-3">
+</div>
+<div class="row align-items-start g-4 mt-1">
+<div class="col-lg-5" data-aos="fade-right" data-aos-delay="100">
+<div class="card-soft p-4 contact-clergy-card">
+<p class="mb-1"><span class="lang-es">Pastor Rev Toribio C. Guerrero</span><span class="lang-en">Pastor Rev. Toribio C. Guerrero</span></p>
+<p class="mb-3"><span class="lang-es">Vicario Parroquial Rev. Juan Mercado</span><span class="lang-en">Parochial Vicar Rev. Juan Mercado</span></p>
+<div class="fw-bold mb-2"><span class="lang-es">Diáconos</span><span class="lang-en">Deacons</span></div>
+<p class="mb-1">Rev. Mr. Alberto De Jesús Brizuela</p>
+<p class="mb-4">Rev. Mr. Marte Avila</p>
+<p class="mb-1"><strong><span class="lang-es">Teléfono:</span><span class="lang-en">Phone:</span></strong> 956-723-4267</p>
+<p class="mb-1"><strong>Fax:</strong> 956-723-5754</p>
+<p class="mb-3"><strong>Email:</strong> <a href="mailto:sec@christthekinglaredo.org">sec@christthekinglaredo.org</a></p>
+<img alt="Clergy photo" class="img-fluid mt-2" src="assets/data/contact/clergy-photo.png"/>
+</div>
+</div>
+<div class="col-lg-7" data-aos="fade-left" data-aos-delay="100">
+<div class="card-soft p-3">
 <img alt="Imagen de la oficina" data-i18n-alt="alt.office_image" class="img-fluid rounded" src="assets/data/contact/office-img.png"/>
-<div class="ratio ratio-21x9" style="border-radius: 18px; overflow:hidden; border:1px solid var(--ctk-border);">
-<iframe allowfullscreen="" height="450" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3538.8216360879273!2d-99.48992272401321!3d27.505922034345666!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x866123d87aca3219%3A0xaea43c18222149d5!2s1105%20Tilden%20Ave%2C%20Laredo%2C%20TX%2078040!5e0!3m2!1sen!2sus!4v1771526984975!5m2!1sen!2sus" style="border:0;" width="600"></iframe>
+<div class="ratio ratio-21x9 mt-3" style="border-radius: 18px; overflow:hidden; border:1px solid var(--ctk-border);">
+<iframe allowfullscreen="" height="450" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3538.8216360879273!2d-99.48992272401321!3d27.505922034345666!2m3!1f0!2f0!3f0!2m3!1i1024!2i768!4f13.1!3m3!1m2!1s0x866123d87aca3219%3A0xaea43c18222149d5!2s1105%20Tilden%20Ave%2C%20Laredo%2C%20TX%2078040!5e0!3m2!1sen!2sus!4v1771526984975!5m2!1sen!2sus" style="border:0;" width="600"></iframe>
 </div>
 </div>
 </div>
