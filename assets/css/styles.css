@@ -1,5 +1,4 @@
-html.js:not(.i18n-ready) body{opacity:0;transition:opacity .15s ease-in;}
-html.i18n-ready body{opacity:1;}
+body{opacity:1;}
 :root{
   --ctk-bg: #ffffff;
   --ctk-text: #0c0c0c;
