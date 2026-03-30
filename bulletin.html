@@ -1,170 +1,227 @@
 <!DOCTYPE html>
 
 <html lang="es">
+
 <head>
-<script>(function () { try { document.documentElement.classList.add('js'); var u = new URL(location.href); var l = u.searchParams.get('lang') || localStorage.getItem('ctk_lang'); if (!l) { l = (navigator.language || 'es').toLowerCase().startsWith('en') ? 'en' : 'es'; } document.documentElement.setAttribute('lang', l); document.documentElement.setAttribute('data-lang', l); } catch (e) { } })();</script>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Boletín • Iglesia Católica Cristo Rey</title>
-<meta content="Cristo Rey Iglesia Católica en Laredo, TX — horarios de Misa, ministerios, noticias, boletín y donaciones." name="description"/>
-<meta content="Iglesia Católica Cristo Rey" property="og:title"/>
-<meta content="Bienvenidos. Acompáñanos a Misa, ministerios y vida parroquial." property="og:description"/>
-<meta content="website" property="og:type"/>
-<meta content="assets/data/church-logo.png" property="og:image"/>
-<meta content="summary_large_image" name="twitter:card"/>
-<link href="assets/data/church-logo.png" rel="icon" type="image/png"/>
-<link href="assets/data/church-logo.png" rel="apple-touch-icon"/>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
-<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
-<link href="assets/css/styles.css" rel="stylesheet"/>
+    <script>(function () { try { document.documentElement.classList.add('js'); var u = new URL(location.href); var l = u.searchParams.get('lang') || localStorage.getItem('ctk_lang'); if (!l) { l = (navigator.language || 'es').toLowerCase().startsWith('en') ? 'en' : 'es'; } document.documentElement.setAttribute('lang', l); document.documentElement.setAttribute('data-lang', l); } catch (e) { } })();</script>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>Boletín • Iglesia Católica Cristo Rey</title>
+    <meta
+        content="Cristo Rey Iglesia Católica en Laredo, TX — horarios de Misa, ministerios, noticias, boletín y donaciones."
+        name="description" />
+    <meta content="Iglesia Católica Cristo Rey" property="og:title" />
+    <meta content="Bienvenidos. Acompáñanos a Misa, ministerios y vida parroquial." property="og:description" />
+    <meta content="website" property="og:type" />
+    <meta content="assets/data/church-logo.png" property="og:image" />
+    <meta content="summary_large_image" name="twitter:card" />
+    <link href="assets/data/church-logo.png" rel="icon" type="image/png" />
+    <link href="assets/data/church-logo.png" rel="apple-touch-icon" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600&amp;family=Inter:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+    <link href="assets/css/styles.css" rel="stylesheet" />
 </head>
+
 <body>
-<nav class="navbar navbar-expand-lg sticky-top navbar-light bg-white border-bottom">
-<div class="container d-flex flex-column flex-lg-row align-items-start align-items-lg-center">
-<a class="navbar-brand d-flex align-items-center gap-2 order-1 order-lg-1" href="index.html">
-<img alt="Logo de la Iglesia Católica Cristo Rey" class="brand-logo" height="40" src="assets/data/church-logo.png" width="40"/>
-<div class="d-flex flex-column lh-sm">
-<span class="brand-title">Iglesia Católica Cristo Rey</span>
-<small class="brand-subtitle">¡Viva Cristo Rey!</small>
-</div>
-</a><div class="nav-controls d-flex align-items-center gap-2 mt-2 mt-lg-0 order-2 order-lg-3"><button aria-controls="navMain" aria-expanded="false" aria-label="Alternar navegación" class="navbar-toggler" data-bs-target="#navMain" data-bs-toggle="collapse" type="button">
-<span class="navbar-toggler-icon"></span>
-</button><div class="dropdown lang-wrap">
-<button aria-expanded="false" class="btn btn-outline-dark btn-sm dropdown-toggle" data-bs-display="static" data-bs-toggle="dropdown" type="button">
-<i class="bi bi-translate me-1"></i><span>Idioma</span>
-</button>
-<ul class="dropdown-menu dropdown-menu-end shadow-sm">
-<li><a class="dropdown-item d-flex align-items-center gap-2" href="bulletin.html"><i class="bi bi-check2 d-none lang-check" data-lang-check="es"></i><span>Español</span></a></li>
-<li><a class="dropdown-item d-flex align-items-center gap-2" href="bulletin-en.html"><i class="bi bi-check2 d-none lang-check" data-lang-check="en"></i><span>Inglés</span></a></li>
-</ul>
-</div></div>
-<div class="collapse navbar-collapse order-lg-2 order-3" id="navMain">
-<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-<li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
-<li class="nav-item"><a class="nav-link" href="worship.html">Misa</a></li>
-<li class="nav-item"><a class="nav-link" href="news.html">Noticias</a></li>
-<li class="nav-item"><a aria-current="page" class="nav-link active" href="bulletin.html">Boletín</a></li>
-<li class="nav-item"><a class="nav-link" href="sermons.html">Sermones</a>
-</li>
-<li class="nav-item"><a class="nav-link" href="ministries.html">Ministerios</a></li>
-<li class="nav-item"><a class="nav-link" href="giving.html">Donar</a></li>
-<li class="nav-item"><a class="nav-link" href="contact.html">Contacto</a>
-</li>
-</ul>
-<div class="ms-lg-3 d-flex gap-2 mt-3 mt-lg-0">
-<a class="btn btn-dark btn-sm" href="giving.html"><i class="bi bi-heart-fill me-1"></i><span>Donar</span></a>
-<a class="btn btn-outline-dark btn-sm" href="contact.html"><i class="bi bi-chat-dots me-1"></i><span>Contáctanos</span></a>
-</div>
-</div>
-</div>
-</nav>
-<section class="section">
-<div class="container">
-<div class="row align-items-center g-4">
-<div class="col-lg-6" data-aos="fade-right">
-<h1 class="section-title">Boletín</h1>
-<p class="section-lead">El boletín semanal más reciente está disponible a continuación.</p>
-</div>
-<div class="col-lg-6" data-aos="fade-left">
-<img alt="Boletín" class="bulletin-img" src="assets/data/bulleting/bulleting-img-01.png"/>
-</div>
-</div>
-<div class="row g-3 mt-3">
-<div class="col-12">
-<div class="card-soft p-4" data-aos="fade-up">
-<h2 class="h5 mb-3">Boletines recientes</h2>
-<div class="list-group list-group-flush">
-<a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="assets/data/bulleting/cuaresma-2026-pdf.pdf" rel="noopener" target="_blank"><span>Cuaresma 2026</span><span class="small text-muted">PDF</span>
-</a>
-<a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="assets/data/bulleting/2026-02-22.pdf" rel="noopener" target="_blank"><span>2026-02-22</span><span class="small text-muted">PDF</span>
-</a>
-<a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="assets/data/bulleting/2026-02-28.pdf" rel="noopener" target="_blank"><span>2026-02-28</span><span class="small text-muted">PDF</span>
-</a>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<footer class="footer mt-5 border-top">
-<div class="container py-5">
-<div class="row g-4">
-<div class="col-lg-3">
-<div class="d-flex align-items-center gap-2 mb-2">
-<img alt="Logo de la Iglesia Católica Cristo Rey" class="brand-logo" height="40" src="assets/data/church-logo.png" width="40"/>
-<div class="lh-sm">
-<div class="fw-bold">Iglesia Católica Cristo Rey</div>
-<small class="text-muted">Una comunidad parroquial acogedora.</small>
-</div>
-</div>
-<p class="text-muted small mb-3">Acompáñanos a la Misa, al servicio y a la comunidad. Todos son bienvenidos.</p>
-<div class="d-flex gap-2">
-<a aria-label="Facebook" class="social btn btn-outline-dark btn-sm" href="https://www.facebook.com/share/16rQ1C52ZN/?mibextid=wwXIfr"><i class="bi bi-facebook"></i></a>
-<a aria-label="X" class="social btn btn-outline-dark btn-sm" href="#"><i class="bi bi-twitter-x"></i></a>
-<a aria-label="YouTube" class="social btn btn-outline-dark btn-sm" href="https://www.youtube.com/@ChristTheKingLaredoTX"><i class="bi bi-youtube"></i></a>
-<a aria-label="Instagram" class="social btn btn-outline-dark btn-sm" href="https://www.instagram.com/christthekinglaredo?igsh=MzJka3QwM2VocGp4"><i class="bi bi-instagram"></i></a>
-</div>
-</div>
-<div class="col-6 col-lg-3">
-<h6 class="text-uppercase small fw-bold mb-3">Vida Parroquial</h6>
-<ul class="list-unstyled footer-list">
-<li><a class="footer-link" href="worship.html#mass-times">Horario de Misas</a></li>
-<li><a class="footer-link" href="ministries.html">Ministerios</a>
-</li>
-<li><a class="footer-link" href="bulletin.html">Boletín</a></li>
-<li class="nav-item"><a class="nav-link" href="sermons.html">Sermones</a></li>
-</ul>
-</div>
-<div class="col-6 col-lg-3">
-<h6 class="text-uppercase small fw-bold mb-3">Conectar</h6>
-<ul class="list-unstyled footer-list">
-<li><a class="footer-link" href="contact.html">Contacto</a></li>
-<li><a class="footer-link" href="news.html">Noticias</a></li>
-<li><a class="footer-link" href="giving.html">Donar en línea</a>
-</li>
-</ul>
-</div>
-<div class="col-6 col-lg-3">
-<h6 class="text-uppercase small fw-bold mb-3">Más</h6>
-<ul class="list-unstyled footer-list">
-<li><a class="footer-link" href="privacy.html">Privacidad</a></li>
-<li><a class="footer-link" href="accessibility.html">Accesibilidad</a></li>
-</ul>
-</div>
-<div class="col-lg-3">
-<h6 class="text-uppercase small fw-bold mb-3">Dirección</h6>
-<p class="small text-muted mb-2">1105 Tilden Ave., Laredo, TX 78040<br/>Tel: (956) 723-4267</p>
-<p class="small text-muted mb-2"><span>Párroco: Rev. Toribio C. Guerrero</span><br/><span>Vicario Parroquial: Rev. Juan Mercado</span><br/>
-<br/><span>Diáconos:</span><br/>Rev. Mr. Alberto De
+    <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-white border-bottom">
+        <div class="container d-flex flex-column flex-lg-row align-items-start align-items-lg-center">
+            <a class="navbar-brand d-flex align-items-center gap-2 order-1 order-lg-1" href="index.html">
+                <img alt="Logo de la Iglesia Católica Cristo Rey" class="brand-logo" height="40"
+                    src="assets/data/church-logo.png" width="40" />
+                <div class="d-flex flex-column lh-sm">
+                    <span class="brand-title">Iglesia Católica Cristo Rey</span>
+                    <small class="brand-subtitle">¡Viva Cristo Rey!</small>
+                </div>
+            </a>
+            <div class="nav-controls d-flex align-items-center gap-2 mt-2 mt-lg-0 order-2 order-lg-3"><button
+                    aria-controls="navMain" aria-expanded="false" aria-label="Alternar navegación"
+                    class="navbar-toggler" data-bs-target="#navMain" data-bs-toggle="collapse" type="button">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="dropdown lang-wrap">
+                    <button aria-expanded="false" class="btn btn-outline-dark btn-sm dropdown-toggle"
+                        data-bs-display="static" data-bs-toggle="dropdown" type="button">
+                        <i class="bi bi-translate me-1"></i><span>Idioma</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                        <li><a class="dropdown-item d-flex align-items-center gap-2" href="bulletin.html"><i
+                                    class="bi bi-check2 d-none lang-check"
+                                    data-lang-check="es"></i><span>Español</span></a></li>
+                        <li><a class="dropdown-item d-flex align-items-center gap-2" href="bulletin-en.html"><i
+                                    class="bi bi-check2 d-none lang-check"
+                                    data-lang-check="en"></i><span>Inglés</span></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="collapse navbar-collapse order-lg-2 order-3" id="navMain">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="worship.html">Misa</a></li>
+                    <li class="nav-item"><a class="nav-link" href="news.html">Noticias</a></li>
+                    <li class="nav-item"><a aria-current="page" class="nav-link active" href="bulletin.html">Boletín</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="sermons.html">Sermones</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="ministries.html">Ministerios</a></li>
+                    <li class="nav-item"><a class="nav-link" href="giving.html">Donar</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contacto</a>
+                    </li>
+                </ul>
+                <div class="ms-lg-3 d-flex gap-2 mt-3 mt-lg-0">
+                    <a class="btn btn-dark btn-sm" href="giving.html"><i
+                            class="bi bi-heart-fill me-1"></i><span>Donar</span></a>
+                    <a class="btn btn-outline-dark btn-sm" href="contact.html"><i
+                            class="bi bi-chat-dots me-1"></i><span>Contáctanos</span></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <section class="section">
+        <div class="container">
+            <div class="row align-items-center g-4">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <h1 class="section-title">Boletín</h1>
+                    <p class="section-lead">El boletín semanal más reciente está disponible a continuación.</p>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <img alt="Boletín" class="bulletin-img" src="assets/data/bulleting/bulleting-img-01.png" />
+                </div>
+            </div>
+            <div class="row g-3 mt-3">
+                <div class="col-12">
+                    <div class="card-soft p-4" data-aos="fade-up">
+                        <h2 class="h5 mb-3">Boletines recientes</h2>
+                        <!-- Listado de boletines -->
+                        <div class="list-group list-group-flush">
+                            <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                                href="assets/data/bulleting/cuaresma-2026-pdf.pdf" rel="noopener"
+                                target="_blank"><span>Cuaresma 2026</span><span class="small text-muted">PDF</span>
+                            </a>
+                            <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                                href="assets/data/bulleting/2026-02-22.pdf" rel="noopener"
+                                target="_blank"><span>2026-02-22</span><span class="small text-muted">PDF</span>
+                            </a>
+                            <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                                href="assets/data/bulleting/2026-02-28.pdf" rel="noopener"
+                                target="_blank"><span>2026-02-28</span><span class="small text-muted">PDF</span>
+                            </a>
+                            <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                                href="assets/data/bulleting/bulletin-2026-03-01.pdf" rel="noopener"
+                                target="_blank"><span>2026-03-01</span><span class="small text-muted">PDF</span>
+                            </a>
+                            <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                                href="assets/data/bulleting/bulletin-2026-03-08.pdf" rel="noopener"
+                                target="_blank"><span>2026-03-08</span><span class="small text-muted">PDF</span>
+                            </a>
+                            <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                                href="assets/data/bulleting/bulletin-2026-03-15.pdf" rel="noopener"
+                                target="_blank"><span>2026-03-15</span><span class="small text-muted">PDF</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="footer mt-5 border-top">
+        <div class="container py-5">
+            <div class="row g-4">
+                <div class="col-lg-3">
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <img alt="Logo de la Iglesia Católica Cristo Rey" class="brand-logo" height="40"
+                            src="assets/data/church-logo.png" width="40" />
+                        <div class="lh-sm">
+                            <div class="fw-bold">Iglesia Católica Cristo Rey</div>
+                            <small class="text-muted">Una comunidad parroquial acogedora.</small>
+                        </div>
+                    </div>
+                    <p class="text-muted small mb-3">Acompáñanos a la Misa, al servicio y a la comunidad. Todos son
+                        bienvenidos.</p>
+                    <div class="d-flex gap-2">
+                        <a aria-label="Facebook" class="social btn btn-outline-dark btn-sm"
+                            href="https://www.facebook.com/share/16rQ1C52ZN/?mibextid=wwXIfr"><i
+                                class="bi bi-facebook"></i></a>
+                        <a aria-label="X" class="social btn btn-outline-dark btn-sm" href="#"><i
+                                class="bi bi-twitter-x"></i></a>
+                        <a aria-label="YouTube" class="social btn btn-outline-dark btn-sm"
+                            href="https://www.youtube.com/@ChristTheKingLaredoTX"><i class="bi bi-youtube"></i></a>
+                        <a aria-label="Instagram" class="social btn btn-outline-dark btn-sm"
+                            href="https://www.instagram.com/christthekinglaredo?igsh=MzJka3QwM2VocGp4"><i
+                                class="bi bi-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3">
+                    <h6 class="text-uppercase small fw-bold mb-3">Vida Parroquial</h6>
+                    <ul class="list-unstyled footer-list">
+                        <li><a class="footer-link" href="worship.html#mass-times">Horario de Misas</a></li>
+                        <li><a class="footer-link" href="ministries.html">Ministerios</a>
+                        </li>
+                        <li><a class="footer-link" href="bulletin.html">Boletín</a></li>
+                        <li class="nav-item"><a class="nav-link" href="sermons.html">Sermones</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-lg-3">
+                    <h6 class="text-uppercase small fw-bold mb-3">Conectar</h6>
+                    <ul class="list-unstyled footer-list">
+                        <li><a class="footer-link" href="contact.html">Contacto</a></li>
+                        <li><a class="footer-link" href="news.html">Noticias</a></li>
+                        <li><a class="footer-link" href="giving.html">Donar en línea</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-6 col-lg-3">
+                    <h6 class="text-uppercase small fw-bold mb-3">Más</h6>
+                    <ul class="list-unstyled footer-list">
+                        <li><a class="footer-link" href="privacy.html">Privacidad</a></li>
+                        <li><a class="footer-link" href="accessibility.html">Accesibilidad</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3">
+                    <h6 class="text-uppercase small fw-bold mb-3">Dirección</h6>
+                    <p class="small text-muted mb-2">1105 Tilden Ave., Laredo, TX 78040<br />Tel: (956) 723-4267</p>
+                    <p class="small text-muted mb-2"><span>Párroco: Rev. Toribio C. Guerrero</span><br /><span>Vicario
+                            Parroquial: Rev. Juan Mercado</span><br />
+                        <br /><span>Diáconos:</span><br />Rev. Mr. Alberto De
                         Jesús Brizuela
-                        <br/>Rev. Mr. Marte Avila
-                        <br/>
-<br/><span>Teléfono</span>: 956-723-4267 <br/><span>Fax</span>: 956-723-5754 <br/><span>Correo</span>: <a href="mailto:cre@christthekinglaredo.org">cre@christthekinglaredo.org</a>
-</p>
-<a class="btn btn-dark btn-sm w-100" href="https://discovermass.com/church/christ-the-king-laredo-tx/" rel="noopener" target="_blank"><span>Directorio parroquial</span><i class="bi bi-box-arrow-up-right ms-1"></i>
-</a>
-</div>
-</div>
-<div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2 small mb-3">
-<div class="text-muted">Nuestra parroquia pertenece a la <a href="https://dioceseoflaredo.org/" rel="noopener" target="_blank">Diócesis de Laredo</a>.</div>
-<a class="btn btn-outline-dark btn-sm" href="https://dioceseoflaredo.org/" rel="noopener" target="_blank">
-<span>Visitar Diócesis</span> <i class="bi bi-box-arrow-up-right ms-1"></i>
-</a>
-</div>
-<hr class="my-4"/>
-<div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2">
-<div class="small text-muted">© 2026 Iglesia Católica Cristo Rey. Todos los derechos reservados.</div>
-<div class="small text-muted">Hecho con Bootstrap • Imágenes vía Picsum</div>
-</div>
-</div>
-</footer>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-<script src="assets/js/main.js"></script>
-<!-- -->
+                        <br />Rev. Mr. Marte Avila
+                        <br />
+                        <br /><span>Teléfono</span>: 956-723-4267 <br /><span>Fax</span>: 956-723-5754
+                        <br /><span>Correo</span>: <a
+                            href="mailto:cre@christthekinglaredo.org">cre@christthekinglaredo.org</a>
+                    </p>
+                    <a class="btn btn-dark btn-sm w-100"
+                        href="https://discovermass.com/church/christ-the-king-laredo-tx/" rel="noopener"
+                        target="_blank"><span>Directorio parroquial</span><i class="bi bi-box-arrow-up-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+            <div
+                class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2 small mb-3">
+                <div class="text-muted">Nuestra parroquia pertenece a la <a href="https://dioceseoflaredo.org/"
+                        rel="noopener" target="_blank">Diócesis de Laredo</a>.</div>
+                <a class="btn btn-outline-dark btn-sm" href="https://dioceseoflaredo.org/" rel="noopener"
+                    target="_blank">
+                    <span>Visitar Diócesis</span> <i class="bi bi-box-arrow-up-right ms-1"></i>
+                </a>
+            </div>
+            <hr class="my-4" />
+            <div
+                class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2">
+                <div class="small text-muted">© 2026 Iglesia Católica Cristo Rey. Todos los derechos reservados.</div>
+                <div class="small text-muted">Hecho con Bootstrap • Imágenes vía Picsum</div>
+            </div>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script src="assets/js/main.js"></script>
+    <!-- -->
 </body>
+
 </html>
