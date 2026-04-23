@@ -30,13 +30,15 @@ body {
 }
 
 .admin-auth-page {
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 24px;
+  min-height: 100vh;
 }
 
 .admin-auth-shell {
-  width: min(100%, 1080px);
+  width: min(100%, 1120px);
 }
 
 .admin-auth-card,
@@ -51,7 +53,14 @@ body {
 }
 
 .admin-auth-card {
-  padding: 32px;
+  padding: 34px;
+}
+
+.admin-auth-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(360px, 440px);
+  gap: 28px;
+  align-items: stretch;
 }
 
 .admin-brand {
@@ -81,6 +90,32 @@ body {
 
 .admin-panel {
   padding: 28px;
+}
+
+.admin-auth-intro {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 28px;
+  padding: 6px 6px 6px 2px;
+}
+
+.admin-auth-copy {
+  max-width: 520px;
+}
+
+.admin-auth-heading {
+  font-family: "Crimson Text", serif;
+  font-size: clamp(2.5rem, 4vw, 4.2rem);
+  line-height: 0.95;
+  margin: 0 0 16px;
+  letter-spacing: -0.03em;
+}
+
+.admin-auth-text {
+  font-size: 1.08rem;
+  color: var(--admin-muted);
+  max-width: 42ch;
 }
 
 .admin-lock-icon {
@@ -121,11 +156,50 @@ body {
 .admin-login-panel {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .admin-google-signin {
   min-height: 44px;
+  width: auto;
+  display: inline-flex;
+  justify-content: center;
+}
+
+.admin-google-signin-wrap {
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+.admin-google-signin iframe,
+.admin-google-signin > div {
+  margin: 0 auto !important;
+  width: 220px !important;
+  max-width: 220px !important;
+}
+
+.admin-login-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100%;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(251, 248, 242, 0.88));
+}
+
+.admin-login-card-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 18px;
+}
+
+.admin-lock-icon-centered {
+  margin: 0 auto;
 }
 
 .admin-app-shell {
@@ -172,6 +246,7 @@ body {
   background: rgba(255, 255, 255, 0.72);
   border: 1px solid var(--admin-border);
   color: var(--admin-muted);
+  max-width: 100%;
 }
 
 .admin-session-pill {
@@ -278,6 +353,10 @@ body {
   border: 1px solid var(--admin-border);
 }
 
+.admin-modal .modal-footer {
+  gap: 10px;
+}
+
 .admin-address-field {
   position: relative;
 }
@@ -354,6 +433,14 @@ body {
 }
 
 @media (max-width: 991.98px) {
+  .admin-auth-shell {
+    width: min(100%, 760px);
+  }
+
+  .admin-auth-layout {
+    grid-template-columns: 1fr;
+  }
+
   .admin-meta-grid {
     grid-template-columns: 1fr;
   }
@@ -362,19 +449,159 @@ body {
   .admin-panel {
     padding: 22px;
   }
+
+  .admin-auth-intro {
+    padding: 0;
+  }
+
+  .admin-auth-heading {
+    font-size: 2.6rem;
+  }
+
+  .admin-login-card {
+    max-width: 540px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .admin-topbar {
+    position: static;
+  }
 }
 
 @media (max-width: 575.98px) {
   .admin-auth-page {
     padding: 12px;
+    align-items: center;
   }
 
   .admin-title {
     font-size: 1.85rem;
   }
 
+  .admin-brand {
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .admin-brand > div {
+    width: 100%;
+    text-align: center;
+  }
+
+  .admin-brand img {
+    width: 48px;
+    height: 48px;
+  }
+
+  .admin-auth-card {
+    padding: 18px;
+  }
+
+  .admin-auth-layout {
+    gap: 20px;
+  }
+
+  .admin-auth-intro {
+    align-items: center;
+    text-align: center;
+  }
+
+  .admin-panel {
+    padding: 18px;
+  }
+
   .admin-container {
     padding-left: 14px;
     padding-right: 14px;
+  }
+
+  .admin-login-card-head {
+    flex-direction: column;
+  }
+
+  .admin-auth-heading {
+    font-size: 2.15rem;
+  }
+
+  .admin-auth-text {
+    font-size: 1rem;
+  }
+
+  .admin-auth-copy {
+    max-width: none;
+    width: 100%;
+    text-align: center;
+  }
+
+  .admin-login-panel {
+    width: 100%;
+    align-items: center;
+  }
+
+  .admin-google-signin iframe,
+  .admin-google-signin > div {
+    width: 220px !important;
+    max-width: 220px !important;
+  }
+
+  .admin-lock-icon {
+    width: 54px;
+    height: 54px;
+    border-radius: 18px;
+    font-size: 1.25rem;
+  }
+
+  .admin-login-card {
+    max-width: 340px;
+  }
+
+  .admin-session-pill {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .admin-inline-state {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    border-radius: 18px;
+  }
+
+  .admin-main {
+    padding-top: 20px;
+    padding-bottom: 28px;
+  }
+
+  .admin-table {
+    min-width: 720px;
+  }
+
+  .admin-empty-state {
+    padding: 32px 12px 8px;
+  }
+
+  .admin-modal .modal-dialog {
+    margin: 0.75rem;
+  }
+
+  .admin-modal .modal-footer {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .admin-modal .modal-footer .btn {
+    width: 100%;
+  }
+
+  .admin-address-suggestions {
+    left: 0;
+    right: 0;
+    max-height: 200px;
   }
 }

@@ -18,41 +18,48 @@
 <body class="admin-auth-page">
   <main class="admin-auth-shell">
     <section class="admin-auth-card shadow-lg">
-      <div class="admin-brand">
-        <img src="../assets/data/church-logo.png" alt="Christ The King Church logo" width="56" height="56" />
-        <div>
-          <p class="admin-eyebrow mb-1">Private Workspace</p>
-          <h1 class="admin-title mb-0">Christ The King Admin</h1>
-        </div>
-      </div>
-
-      <div class="admin-panel mt-4">
-        <div class="d-flex align-items-start justify-content-between gap-3 flex-wrap">
-          <div>
-            <p class="badge text-bg-light border admin-badge mb-2">Secure staff access</p>
-            <h2 class="h4 mb-2">Sign in to manage member records</h2>
-            <p class="text-secondary mb-0">
-              This admin area is prepared for deployment with Google Sign-In, Google Apps Script, and a protected Google Sheet.
+      <div class="admin-auth-layout">
+        <div class="admin-auth-intro">
+          <div class="admin-brand">
+            <img src="../assets/data/church-logo.png" alt="Christ The King Church logo" width="56" height="56" />
+            <div>
+              <p class="admin-eyebrow mb-1">Private Workspace</p>
+              <h1 class="admin-title mb-0">Christ The King Admin</h1>
+            </div>
+          </div>
+          <div class="admin-auth-copy">
+            <span class="badge text-bg-light border admin-badge mb-3">Secure staff access</span>
+            <h2 class="admin-auth-heading">Member records, in one protected place.</h2>
+            <p class="admin-auth-text mb-0">
+              Sign in to open the church member directory and manage records privately.
             </p>
           </div>
-          <div class="admin-lock-icon">
-            <i class="bi bi-shield-lock"></i>
+        </div>
+
+        <div class="admin-panel admin-login-card">
+          <div class="admin-login-card-head">
+            <div class="admin-lock-icon admin-lock-icon-centered">
+              <i class="bi bi-shield-lock"></i>
+            </div>
+            <div>
+              <p class="admin-eyebrow mb-2">Login</p>
+              <h2 class="h4 mb-1">Continue with Google</h2>
+              <p class="text-secondary mb-0">
+                Use your approved church account to enter the admin portal.
+              </p>
+            </div>
           </div>
-        </div>
 
-        <div class="alert alert-warning mt-4 d-none" data-admin-config-warning>
-          Add your Google OAuth client ID and Apps Script web app URL to <code>admin/assets/admin-config.js</code> before deploying this portal.
-        </div>
+          <div class="alert alert-warning mt-4 d-none" data-admin-config-warning>
+            Add your Google OAuth client ID and Apps Script web app URL to <code>admin/assets/admin-config.js</code> before deploying this portal.
+          </div>
 
-        <div class="admin-login-panel mt-4">
-          <p class="text-secondary mb-3">
-            Staff members sign in with their approved Google account. Access is checked against the <code>Users</code> tab in the spreadsheet.
-          </p>
-          <div id="googleSignInMount" class="admin-google-signin"></div>
-          <div id="loginMessage" class="small mt-3 admin-message" aria-live="polite"></div>
-        </div>
-        <div class="admin-support-note mt-4">
-          <p class="mb-0">Only Google accounts listed in the spreadsheet <code>Users</code> tab should be allowed to access the members portal.</p>
+          <div class="admin-login-panel mt-4">
+            <div class="admin-google-signin-wrap">
+              <div id="googleSignInMount" class="admin-google-signin"></div>
+            </div>
+            <div id="loginMessage" class="small mt-3 admin-message" aria-live="polite"></div>
+          </div>
         </div>
       </div>
     </section>

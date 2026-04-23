@@ -381,12 +381,29 @@
     });
   }
 
-  function initGoogleSignIn() {
-    if (!window.google || !window.google.accounts || !window.google.accounts.id) {
-      setMessage(document.getElementById("loginMessage"), "Google Sign-In could not be loaded.", "danger");
-      return;
-    }
+  function waitForGoogleIdentity(timeoutMs) {
+    return new Promise(function (resolve, reject) {
+      var startedAt = Date.now();
 
+      function check() {
+        if (window.google && window.google.accounts && window.google.accounts.id) {
+          resolve();
+          return;
+        }
+
+        if (Date.now() - startedAt >= timeoutMs) {
+          reject(new Error("Google Sign-In could not be loaded."));
+          return;
+        }
+
+        window.setTimeout(check, 120);
+      }
+
+      check();
+    });
+  }
+
+  function initGoogleSignIn() {
     var config = getConfig();
     var loginMessage = document.getElementById("loginMessage");
     var mount = document.getElementById("googleSignInMount");
@@ -425,7 +442,7 @@
         theme: "outline",
         size: "large",
         shape: "pill",
-        width: 320,
+        width: 220,
         text: "signin_with"
       });
     }
@@ -497,7 +514,18 @@
       }
     }
 
-    initGoogleSignIn();
+    try {
+      setMessage(document.getElementById("loginMessage"), "Loading Google Sign-In...", "");
+      await waitForGoogleIdentity(8000);
+      setMessage(document.getElementById("loginMessage"), "", "");
+      initGoogleSignIn();
+    } catch (error) {
+      setMessage(
+        document.getElementById("loginMessage"),
+        (error && error.message ? error.message : "Google Sign-In could not be loaded.") + " Check the OAuth client origin and browser console.",
+        "danger"
+      );
+    }
   }
 
   function bindMembersPage() {
