@@ -1,5 +1,6 @@
 (function () {
   var SESSION_KEY = "ctk_admin_google_session";
+  var MEMBERS_CACHE_KEY = "ctk_admin_members_cache";
   var memberFields = ["status", "first_name", "last_name", "phone_number", "address"];
   var state = {
     members: [],
@@ -83,6 +84,27 @@
     try {
       window.sessionStorage.removeItem(SESSION_KEY);
     } catch (_) {}
+  }
+
+  function storeMembersCache(members) {
+    try {
+      window.sessionStorage.setItem(MEMBERS_CACHE_KEY, JSON.stringify({
+        storedAt: Date.now(),
+        members: members || []
+      }));
+    } catch (_) {}
+  }
+
+  function getMembersCache() {
+    try {
+      var raw = window.sessionStorage.getItem(MEMBERS_CACHE_KEY);
+      if (!raw) return null;
+      var parsed = JSON.parse(raw);
+      if (!parsed || !Array.isArray(parsed.members)) return null;
+      return parsed;
+    } catch (_) {
+      return null;
+    }
   }
 
   function parseJwtPayload(token) {
@@ -298,17 +320,31 @@
   }
 
   async function loadMembers() {
-    document.getElementById("membersLoadingState").classList.remove("d-none");
-    document.getElementById("membersErrorState").classList.add("d-none");
+    var loadingState = document.getElementById("membersLoadingState");
+    var errorState = document.getElementById("membersErrorState");
+    var hadExistingMembers = state.members.length > 0;
+
+    if (loadingState && !hadExistingMembers) {
+      loadingState.classList.remove("d-none");
+    }
+    if (errorState) {
+      errorState.classList.add("d-none");
+    }
+
     try {
       var data = await callApi("listMembers");
       state.members = data.members || [];
+      storeMembersCache(state.members);
       renderTable();
     } catch (error) {
-      document.getElementById("membersErrorState").classList.remove("d-none");
+      if (errorState && !hadExistingMembers) {
+        errorState.classList.remove("d-none");
+      }
       throw error;
     } finally {
-      document.getElementById("membersLoadingState").classList.add("d-none");
+      if (loadingState) {
+        loadingState.classList.add("d-none");
+      }
     }
   }
 
@@ -343,6 +379,7 @@
       } else {
         state.members.unshift(data.member);
       }
+      storeMembersCache(state.members);
       renderTable();
       bootstrap.Modal.getInstance(document.getElementById("memberModal")).hide();
       resetForm();
@@ -360,6 +397,7 @@
     try {
       await callApi("deleteMember", { id: id });
       state.members = state.members.filter(function (item) { return item.id !== id; });
+      storeMembersCache(state.members);
       renderTable();
     } catch (error) {
       window.alert(error.message || "Unable to delete this member right now.");
@@ -423,6 +461,7 @@
 
       setMessage(loginMessage, "Verifying access...", "");
       validateSession(pendingSession).then(function (verifiedSession) {
+        verifiedSession.verifiedAt = Date.now();
         storeSession(verifiedSession);
         window.location.href = "members.html";
       }).catch(function (error) {
@@ -602,16 +641,29 @@
       return;
     }
 
-    try {
-      state.user = await validateSession(session);
-    } catch (_) {
-      clearSession();
-      window.location.href = "index.html";
-      return;
+    var recentlyVerified = session.verifiedAt && (Date.now() - session.verifiedAt < 15 * 60 * 1000);
+    if (recentlyVerified) {
+      state.user = session;
+    } else {
+      try {
+        state.user = await validateSession(session);
+        state.user.verifiedAt = Date.now();
+        storeSession(state.user);
+      } catch (_) {
+        clearSession();
+        window.location.href = "index.html";
+        return;
+      }
     }
 
     document.getElementById("adminSessionEmail").textContent = state.user.email || "Approved User";
     bindMembersPage();
+    var cachedMembers = getMembersCache();
+    if (cachedMembers && Array.isArray(cachedMembers.members) && cachedMembers.members.length) {
+      state.members = cachedMembers.members;
+      renderTable();
+      document.getElementById("membersLoadingState").classList.add("d-none");
+    }
     try {
       await loadMembers();
     } catch (error) {

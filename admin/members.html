@@ -38,37 +38,24 @@
 
     <main class="container-fluid admin-container admin-main">
       <section class="admin-hero-panel">
-        <div class="row g-4 align-items-stretch">
-          <div class="col-12 col-xl-7">
-            <div class="admin-panel h-100">
-              <p class="admin-eyebrow mb-2">Protected records</p>
-              <h2 class="mb-2">Private members workspace</h2>
-              <p class="text-secondary mb-4">
-                This area is meant for church staff only and reads member records from the protected Google Sheet after sign-in.
-              </p>
-              <div class="admin-meta-grid">
-                <div class="admin-stat-card">
-                  <span class="admin-stat-label">Total members</span>
-                  <strong id="totalMembersStat">0</strong>
-                </div>
-                <div class="admin-stat-card">
-                  <span class="admin-stat-label">Active</span>
-                  <strong id="activeMembersStat">0</strong>
-                </div>
-                <div class="admin-stat-card">
-                  <span class="admin-stat-label">Inactive</span>
-                  <strong id="inactiveMembersStat">0</strong>
-                </div>
-              </div>
+        <div class="admin-panel admin-warning-panel">
+          <p class="admin-eyebrow mb-2">Deployment</p>
+          <h2 class="h4 mb-3">Production setup reminders</h2>
+          <p class="text-secondary mb-4">
+            Keep this route out of public navigation, restrict the Apps Script to approved Google users, and validate every request against the spreadsheet <code>Users</code> tab.
+          </p>
+          <div class="admin-meta-grid">
+            <div class="admin-stat-card">
+              <span class="admin-stat-label">Total members</span>
+              <strong id="totalMembersStat">0</strong>
             </div>
-          </div>
-          <div class="col-12 col-xl-5">
-            <div class="admin-panel h-100 admin-warning-panel">
-              <p class="admin-eyebrow mb-2">Deployment</p>
-              <h2 class="h4 mb-3">Production setup reminders</h2>
-              <p class="mb-0 text-secondary">
-                Keep this route out of public navigation, restrict the Apps Script to approved Google users, and validate every request against the spreadsheet <code>Users</code> tab.
-              </p>
+            <div class="admin-stat-card">
+              <span class="admin-stat-label">Active</span>
+              <strong id="activeMembersStat">0</strong>
+            </div>
+            <div class="admin-stat-card">
+              <span class="admin-stat-label">Inactive</span>
+              <strong id="inactiveMembersStat">0</strong>
             </div>
           </div>
         </div>
