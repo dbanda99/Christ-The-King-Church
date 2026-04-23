@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CTK Admin Portal</title>
+  <meta name="robots" content="noindex, nofollow, noarchive" />
+  <meta name="description" content="Private admin portal for Christ The King Church." />
+  <link rel="icon" type="image/png" href="../assets/data/church-logo.png" />
+  <link rel="apple-touch-icon" href="../assets/data/church-logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+  <link href="assets/admin.css" rel="stylesheet" />
+</head>
+<body class="admin-auth-page">
+  <main class="admin-auth-shell">
+    <section class="admin-auth-card shadow-lg">
+      <div class="admin-brand">
+        <img src="../assets/data/church-logo.png" alt="Christ The King Church logo" width="56" height="56" />
+        <div>
+          <p class="admin-eyebrow mb-1">Private Workspace</p>
+          <h1 class="admin-title mb-0">Christ The King Admin</h1>
+        </div>
+      </div>
+
+      <div class="admin-panel mt-4">
+        <div class="d-flex align-items-start justify-content-between gap-3 flex-wrap">
+          <div>
+            <p class="badge text-bg-light border admin-badge mb-2">Secure staff access</p>
+            <h2 class="h4 mb-2">Sign in to manage member records</h2>
+            <p class="text-secondary mb-0">
+              This admin area is prepared for deployment with Google Sign-In, Google Apps Script, and a protected Google Sheet.
+            </p>
+          </div>
+          <div class="admin-lock-icon">
+            <i class="bi bi-shield-lock"></i>
+          </div>
+        </div>
+
+        <div class="alert alert-warning mt-4 d-none" data-admin-config-warning>
+          Add your Google OAuth client ID and Apps Script web app URL to <code>admin/assets/admin-config.js</code> before deploying this portal.
+        </div>
+
+        <div class="admin-login-panel mt-4">
+          <p class="text-secondary mb-3">
+            Staff members sign in with their approved Google account. Access is checked against the <code>Users</code> tab in the spreadsheet.
+          </p>
+          <div id="googleSignInMount" class="admin-google-signin"></div>
+          <div id="loginMessage" class="small mt-3 admin-message" aria-live="polite"></div>
+        </div>
+        <div class="admin-support-note mt-4">
+          <p class="mb-0">Only Google accounts listed in the spreadsheet <code>Users</code> tab should be allowed to access the members portal.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="assets/admin-config.js"></script>
+  <script src="assets/admin.js"></script>
+</body>
+</html>
