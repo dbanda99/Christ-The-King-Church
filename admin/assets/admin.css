@@ -224,6 +224,11 @@ body {
   padding-right: 20px;
 }
 
+.admin-members-page .admin-container {
+  width: 100%;
+  max-width: none;
+}
+
 .admin-main {
   padding-top: 32px;
   padding-bottom: 48px;
@@ -490,6 +495,11 @@ body {
 .btn-dark:focus {
   background: #18120b;
   border-color: #18120b;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
 }
 
 @media (max-width: 991.98px) {

@@ -6,6 +6,7 @@
     members: [],
     search: "",
     status: "all",
+    retreatFilter: "all",
     sort: "last_name",
     editingId: null,
     addressController: null,
@@ -301,16 +302,144 @@
     });
   }
 
+  function reportRows() {
+    return filteredMembers().map(function (member) {
+      var retreats = normalizeRetreats(member.retreat_history || member.retreats).map(function (retreat) {
+        return retreat.name + " (" + formatRetreatDate(retreat.date) + ")";
+      }).join("; ");
+      return {
+        status: member.status || "",
+        first_name: member.first_name || "",
+        last_name: member.last_name || "",
+        phone_number: member.phone_number || "",
+        address: member.address || "",
+        retreats: retreats || "None"
+      };
+    });
+  }
+
+  function reportFileName(extension) {
+    var date = new Date().toISOString().slice(0, 10);
+    return "ctk-members-report-" + date + "." + extension;
+  }
+
+  function downloadFile(filename, content, mimeType) {
+    var blob = new Blob([content], { type: mimeType });
+    var url = window.URL.createObjectURL(blob);
+    var link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.URL.revokeObjectURL(url);
+  }
+
+  function csvValue(value) {
+    var text = String(value == null ? "" : value);
+    return '"' + text.replace(/"/g, '""') + '"';
+  }
+
+  function generateCsvReport() {
+    var headers = ["Status", "First Name", "Last Name", "Phone Number", "Address", "Retreats"];
+    var rows = reportRows();
+    var csv = [headers.map(csvValue).join(",")].concat(rows.map(function (row) {
+      return [
+        row.status,
+        row.first_name,
+        row.last_name,
+        row.phone_number,
+        row.address,
+        row.retreats
+      ].map(csvValue).join(",");
+    })).join("\r\n");
+    downloadFile(reportFileName("csv"), "\ufeff" + csv, "text/csv;charset=utf-8");
+  }
+
+  function reportTableHtml(rows) {
+    var headers = ["Status", "First Name", "Last Name", "Phone Number", "Address", "Retreats"];
+    return "<table><thead><tr>" + headers.map(function (header) {
+      return "<th>" + escapeHtml(header) + "</th>";
+    }).join("") + "</tr></thead><tbody>" + rows.map(function (row) {
+      return "<tr>" + [
+        row.status,
+        row.first_name,
+        row.last_name,
+        row.phone_number,
+        row.address,
+        row.retreats
+      ].map(function (value) {
+        return "<td>" + escapeHtml(value) + "</td>";
+      }).join("") + "</tr>";
+    }).join("") + "</tbody></table>";
+  }
+
+  function generateExcelReport() {
+    var rows = reportRows();
+    var html = [
+      '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel">',
+      "<head><meta charset=\"utf-8\" /></head><body>",
+      "<h1>Christ The King Church Members Report</h1>",
+      "<p>Generated " + escapeHtml(new Date().toLocaleString()) + "</p>",
+      reportTableHtml(rows),
+      "</body></html>"
+    ].join("");
+    downloadFile(reportFileName("xls"), html, "application/vnd.ms-excel;charset=utf-8");
+  }
+
+  function generatePdfReport() {
+    var rows = reportRows();
+    var reportWindow = window.open("", "_blank");
+    if (!reportWindow) {
+      window.alert("Please allow pop-ups to generate the PDF report.");
+      return;
+    }
+
+    reportWindow.document.write([
+      "<!doctype html><html><head><meta charset=\"utf-8\" />",
+      "<title>Members Report</title>",
+      "<style>",
+      "body{font-family:Arial,sans-serif;color:#1d1914;margin:28px;}h1{font-size:24px;margin:0 0 6px;}p{color:#6b6258;margin:0 0 18px;}table{width:100%;border-collapse:collapse;font-size:12px;}th,td{border:1px solid #d8d0c4;padding:8px;text-align:left;vertical-align:top;}th{background:#f3efe7;}@media print{@page{size:landscape;margin:0.45in;}button{display:none;}}",
+      "</style></head><body>",
+      "<button onclick=\"window.print()\" style=\"margin-bottom:16px;padding:8px 12px;\">Print / Save PDF</button>",
+      "<h1>Christ The King Church Members Report</h1>",
+      "<p>Generated " + escapeHtml(new Date().toLocaleString()) + " | " + rows.length + " records</p>",
+      reportTableHtml(rows),
+      "</body></html>"
+    ].join(""));
+    reportWindow.document.close();
+    reportWindow.focus();
+  }
+
+  function generateReport(format) {
+    if (format === "pdf") {
+      generatePdfReport();
+      return;
+    }
+    if (format === "excel") {
+      generateExcelReport();
+      return;
+    }
+    if (format === "csv") {
+      generateCsvReport();
+    }
+  }
+
   function filteredMembers() {
     var searchValue = state.search.toLowerCase();
     var list = state.members.filter(function (member) {
       var matchesStatus = state.status === "all" || member.status === state.status;
-      var retreatText = normalizeRetreats(member.retreat_history || member.retreats).map(function (retreat) {
+      var retreats = normalizeRetreats(member.retreat_history || member.retreats);
+      var matchesRetreats =
+        state.retreatFilter === "all" ||
+        (state.retreatFilter === "with" && retreats.length > 0) ||
+        (state.retreatFilter === "without" && retreats.length === 0);
+      var retreatText = retreats.map(function (retreat) {
         return retreat.name + " " + retreat.date;
       }).join(" ");
       var haystack = [member.first_name, member.last_name, member.phone_number, member.address, retreatText].join(" ").toLowerCase();
       var matchesSearch = !searchValue || haystack.indexOf(searchValue) !== -1;
-      return matchesStatus && matchesSearch;
+      return matchesStatus && matchesRetreats && matchesSearch;
     });
 
     list.sort(function (a, b) {
@@ -680,6 +809,7 @@
   function bindMembersPage() {
     var search = document.getElementById("memberSearch");
     var statusFilter = document.getElementById("statusFilter");
+    var retreatFilter = document.getElementById("retreatFilter");
     var sortFilter = document.getElementById("sortFilter");
     var addButton = document.getElementById("addMemberBtn");
     var logoutButton = document.getElementById("logoutBtn");
@@ -698,6 +828,10 @@
       state.status = statusFilter.value;
       renderTable();
     });
+    retreatFilter.addEventListener("change", function () {
+      state.retreatFilter = retreatFilter.value;
+      renderTable();
+    });
     sortFilter.addEventListener("change", function () {
       state.sort = sortFilter.value;
       renderTable();
@@ -714,6 +848,11 @@
       memberPhone.value = formatPhoneInput(memberPhone.value);
     });
     addRetreatButton.addEventListener("click", addRetreatToForm);
+    document.querySelectorAll("[data-report-format]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        generateReport(button.getAttribute("data-report-format"));
+      });
+    });
     retreatList.addEventListener("click", function (event) {
       var button = event.target.closest("[data-remove-retreat]");
       if (!button) return;
