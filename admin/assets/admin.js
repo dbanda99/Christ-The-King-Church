@@ -12,6 +12,7 @@
     addressDebounce: null,
     addressItems: [],
     activeAddressIndex: -1,
+    formRetreats: [],
     user: null
   };
 
@@ -37,6 +38,33 @@
     if (digits.length < 4) return digits;
     if (digits.length < 7) return "(" + digits.slice(0, 3) + ") " + digits.slice(3);
     return "(" + digits.slice(0, 3) + ") " + digits.slice(3, 6) + "-" + digits.slice(6);
+  }
+
+  function normalizeRetreats(value) {
+    var source = value;
+    if (typeof source === "string") {
+      try {
+        source = source ? JSON.parse(source) : [];
+      } catch (_) {
+        source = [];
+      }
+    }
+    if (!Array.isArray(source)) return [];
+    return source.map(function (item) {
+      return {
+        name: formatText(item.name || item.retreat_name),
+        date: formatText(item.date || item.retreat_date)
+      };
+    }).filter(function (item) {
+      return item.name && item.date;
+    });
+  }
+
+  function formatRetreatDate(value) {
+    if (!value) return "";
+    var parts = String(value).split("-");
+    if (parts.length !== 3) return value;
+    return parts[1] + "/" + parts[2] + "/" + parts[0];
   }
 
   function escapeHtml(value) {
@@ -242,11 +270,45 @@
     inactive.textContent = String(state.members.length - activeCount);
   }
 
+  function renderRetreatSummary(member) {
+    var retreats = normalizeRetreats(member.retreat_history || member.retreats);
+    if (!retreats.length) {
+      return '<span class="text-secondary">None</span>';
+    }
+    return '<div class="admin-retreat-summary">' + retreats.map(function (retreat) {
+      return '<span class="admin-retreat-chip">' + escapeHtml(retreat.name) +
+        ' <span>' + escapeHtml(formatRetreatDate(retreat.date)) + "</span></span>";
+    }).join("") + "</div>";
+  }
+
+  function renderRetreatList() {
+    var list = document.getElementById("retreatList");
+    var empty = document.getElementById("noRetreatsText");
+    if (!list || !empty) return;
+    list.innerHTML = "";
+    empty.classList.toggle("d-none", state.formRetreats.length > 0);
+    state.formRetreats.forEach(function (retreat, index) {
+      var item = document.createElement("div");
+      item.className = "admin-retreat-item";
+      item.innerHTML = [
+        "<div>",
+        "<strong>" + escapeHtml(retreat.name) + "</strong>",
+        "<span>" + escapeHtml(formatRetreatDate(retreat.date)) + "</span>",
+        "</div>",
+        '<button type="button" class="btn btn-sm btn-outline-danger" data-remove-retreat="' + index + '">Remove</button>'
+      ].join("");
+      list.appendChild(item);
+    });
+  }
+
   function filteredMembers() {
     var searchValue = state.search.toLowerCase();
     var list = state.members.filter(function (member) {
       var matchesStatus = state.status === "all" || member.status === state.status;
-      var haystack = [member.first_name, member.last_name, member.phone_number, member.address].join(" ").toLowerCase();
+      var retreatText = normalizeRetreats(member.retreat_history || member.retreats).map(function (retreat) {
+        return retreat.name + " " + retreat.date;
+      }).join(" ");
+      var haystack = [member.first_name, member.last_name, member.phone_number, member.address, retreatText].join(" ").toLowerCase();
       var matchesSearch = !searchValue || haystack.indexOf(searchValue) !== -1;
       return matchesStatus && matchesSearch;
     });
@@ -287,6 +349,7 @@
         "<td>" + escapeHtml(member.last_name) + "</td>",
         "<td>" + escapeHtml(member.phone_number || "") + "</td>",
         "<td>" + escapeHtml(member.address || "") + "</td>",
+        "<td>" + renderRetreatSummary(member) + "</td>",
         '<td class="text-end"><div class="d-inline-flex gap-2"><button type="button" class="btn btn-sm btn-outline-secondary" data-action="edit" data-id="' + escapeHtml(member.id) + '">Edit</button><button type="button" class="btn btn-sm btn-outline-danger" data-action="delete" data-id="' + escapeHtml(member.id) + '">Delete</button></div></td>'
       ].join("");
       tbody.appendChild(row);
@@ -301,7 +364,11 @@
     document.getElementById("memberStatus").value = "Active";
     document.getElementById("memberPhone").value = "";
     document.getElementById("memberAddress").value = "";
+    document.getElementById("retreatName").value = "";
+    document.getElementById("retreatDate").value = "";
     document.getElementById("memberModalTitle").textContent = "Add Member";
+    state.formRetreats = [];
+    renderRetreatList();
     setMessage(document.getElementById("formMessage"), "", "");
     clearAddressSuggestions();
   }
@@ -314,7 +381,11 @@
     document.getElementById("memberLastName").value = member.last_name;
     document.getElementById("memberPhone").value = formatPhoneInput(member.phone_number || "");
     document.getElementById("memberAddress").value = member.address || "";
+    document.getElementById("retreatName").value = "";
+    document.getElementById("retreatDate").value = "";
     document.getElementById("memberModalTitle").textContent = "Edit Member";
+    state.formRetreats = normalizeRetreats(member.retreat_history || member.retreats);
+    renderRetreatList();
     setMessage(document.getElementById("formMessage"), "", "");
     clearAddressSuggestions();
   }
@@ -351,13 +422,30 @@
   async function saveMember() {
     var formMessage = document.getElementById("formMessage");
     var saveButton = document.querySelector('[form="memberForm"]');
+    var pendingRetreat = {
+      name: formatText(document.getElementById("retreatName").value),
+      date: formatText(document.getElementById("retreatDate").value)
+    };
+
+    if (pendingRetreat.name || pendingRetreat.date) {
+      if (!pendingRetreat.name || !pendingRetreat.date) {
+        setMessage(formMessage, "Please complete the retreat name and date, or clear those fields before saving.", "danger");
+        return;
+      }
+      state.formRetreats.push(pendingRetreat);
+      document.getElementById("retreatName").value = "";
+      document.getElementById("retreatDate").value = "";
+      renderRetreatList();
+    }
+
     var payload = {
       id: formatText(document.getElementById("memberId").value),
       status: document.getElementById("memberStatus").value,
       first_name: formatText(document.getElementById("memberFirstName").value),
       last_name: formatText(document.getElementById("memberLastName").value),
       phone_number: formatPhoneInput(document.getElementById("memberPhone").value),
-      address: formatText(document.getElementById("memberAddress").value)
+      address: formatText(document.getElementById("memberAddress").value),
+      retreat_history: state.formRetreats.slice()
     };
 
     var invalidField = memberFields.find(function (field) {
@@ -388,6 +476,28 @@
     } finally {
       setLoading(saveButton, false);
     }
+  }
+
+  function addRetreatToForm() {
+    var nameInput = document.getElementById("retreatName");
+    var dateInput = document.getElementById("retreatDate");
+    var formMessage = document.getElementById("formMessage");
+    var retreat = {
+      name: formatText(nameInput.value),
+      date: formatText(dateInput.value)
+    };
+
+    if (!retreat.name || !retreat.date) {
+      setMessage(formMessage, "Please enter both retreat name and date before adding it.", "danger");
+      return;
+    }
+
+    state.formRetreats.push(retreat);
+    nameInput.value = "";
+    dateInput.value = "";
+    setMessage(formMessage, "", "");
+    renderRetreatList();
+    nameInput.focus();
   }
 
   async function deleteMember(id) {
@@ -577,6 +687,8 @@
     var memberPhone = document.getElementById("memberPhone");
     var form = document.getElementById("memberForm");
     var modalElement = document.getElementById("memberModal");
+    var addRetreatButton = document.getElementById("addRetreatBtn");
+    var retreatList = document.getElementById("retreatList");
 
     search.addEventListener("input", function () {
       state.search = formatText(search.value);
@@ -600,6 +712,13 @@
     });
     memberPhone.addEventListener("input", function () {
       memberPhone.value = formatPhoneInput(memberPhone.value);
+    });
+    addRetreatButton.addEventListener("click", addRetreatToForm);
+    retreatList.addEventListener("click", function (event) {
+      var button = event.target.closest("[data-remove-retreat]");
+      if (!button) return;
+      state.formRetreats.splice(Number(button.getAttribute("data-remove-retreat")), 1);
+      renderRetreatList();
     });
     tableBody.addEventListener("click", function (event) {
       var button = event.target.closest("button[data-action]");

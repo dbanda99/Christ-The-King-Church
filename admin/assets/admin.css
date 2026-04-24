@@ -287,7 +287,7 @@ body {
 }
 
 .admin-table {
-  min-width: 980px;
+  min-width: 1180px;
 }
 
 .admin-table thead th {
@@ -327,6 +327,66 @@ body {
 .admin-status-pill[data-status="Inactive"] {
   background: rgba(161, 66, 52, 0.1);
   color: var(--admin-danger);
+}
+
+.admin-retreat-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 180px;
+}
+
+.admin-retreat-chip {
+  display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: rgba(47, 38, 25, 0.08);
+  color: var(--admin-text);
+  font-size: 0.84rem;
+  font-weight: 600;
+}
+
+.admin-retreat-chip span {
+  color: var(--admin-muted);
+  font-weight: 500;
+}
+
+.admin-retreat-panel {
+  padding: 18px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.52);
+  border: 1px solid rgba(70, 51, 28, 0.1);
+}
+
+.admin-retreat-list {
+  display: grid;
+  gap: 10px;
+}
+
+.admin-retreat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(70, 51, 28, 0.1);
+}
+
+.admin-retreat-item strong {
+  display: block;
+  font-size: 0.95rem;
+}
+
+.admin-retreat-item span {
+  display: block;
+  color: var(--admin-muted);
+  font-size: 0.86rem;
 }
 
 .admin-empty-state {
@@ -579,7 +639,7 @@ body {
   }
 
   .admin-table {
-    min-width: 720px;
+    min-width: 900px;
   }
 
   .admin-empty-state {
