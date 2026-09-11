@@ -542,6 +542,62 @@ body{ overflow-x:hidden; }
   color: var(--ctk-text);
   margin: .5rem 0 0;
 }
+.testimonial-more{
+  display: inline-flex;
+  align-items: center;
+  gap: .2rem;
+  margin-left: .25rem;
+  color: var(--ctk-text);
+  font-weight: 700;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.testimony-story{
+  scroll-margin-top: 110px;
+  overflow: hidden;
+}
+.testimony-story-heading{
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 2rem 2rem 1.5rem;
+  border-bottom: 1px solid var(--ctk-border);
+  background: linear-gradient(135deg, rgba(120, 175, 255, .13), rgba(255, 255, 255, .8));
+}
+.testimony-story-body{
+  max-width: 850px;
+  padding: 2rem;
+  font-size: 1.04rem;
+  line-height: 1.8;
+}
+.testimony-story-body blockquote{
+  margin: 1.5rem 0;
+  padding: 1rem 1.25rem;
+  border-left: 4px solid #111;
+  border-radius: 0 14px 14px 0;
+  background: var(--ctk-soft);
+  font-style: italic;
+}
+.testimony-highlight{
+  margin: 1.75rem 0;
+  font-family: "Crimson Text", Georgia, serif;
+  font-size: clamp(1.55rem, 3vw, 2.1rem);
+  font-weight: 600;
+}
+.testimony-story-body .testimony-scripture{
+  border: 0;
+  border-radius: 16px;
+  background: #111;
+  color: #fff;
+  text-align: center;
+}
+.testimony-scripture cite{
+  display: block;
+  margin-top: .4rem;
+  font-size: .9rem;
+  font-style: normal;
+  opacity: .8;
+}
 @media (max-width: 575.98px){
   .testimonial-card{
     flex-direction: column;
@@ -551,6 +607,10 @@ body{ overflow-x:hidden; }
   .testimonial-avatar{
     width: 112px;
     height: 112px;
+  }
+  .testimony-story-heading,
+  .testimony-story-body{
+    padding: 1.25rem;
   }
 }
 .btn-outline-dark{

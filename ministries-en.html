@@ -387,8 +387,24 @@
 <li>Prayer Workshops Wednesday 7:00 PM (after the 6:00 PM Mass)</li>
 <li>Evangelization Group Tuesday 7:00 PM</li>
 <li>Catholic Christian Family Movement</li>
-<li>F.A.M.A. Families in Apostolic Mission</li>
 <li>O.C.I.A.</li>
+</ol><a class="ctk-action" href="contact-en.html">Get Involved →</a>
+</div>
+</div>
+</article>
+<article aria-label="FAMA — Families in Apostolic Mission" class="ctk-slide" data-image="assets/data/ministerio/fama.jpg" data-seed="Families in Apostolic Mission" role="group">
+<div class="ctk-card"><img alt="Families in Apostolic Mission" class="ctk-bg" loading="lazy"/>
+<div class="ctk-ribbon">
+<h2>F.A.M.A.</h2>
+</div>
+<div class="ctk-content">
+<p class="fw-bold text-white mb-2">Families in Apostolic Mission</p>
+<ol class="ctk-list">
+<li>We pray</li>
+<li>We love</li>
+<li>We accompany</li>
+<li>We evangelize</li>
+<li>Together we are stronger in Him</li>
 </ol><a class="ctk-action" href="contact-en.html">Get Involved →</a>
 </div>
 </div>
@@ -563,11 +579,13 @@
       // Assign Picsum background images (stable per card)
       slides.forEach((slide, i) => {
         const seed = encodeURIComponent(slide.getAttribute('data-seed') || slide.getAttribute('aria-label') || `ctk-${i}`);
-        const url = `url(https://picsum.photos/seed/${seed}/900/900)`;
+        const customImage = slide.getAttribute('data-image');
+        const imageUrl = customImage || `https://picsum.photos/seed/${seed}/900/900`;
+        const url = `url(${imageUrl})`;
         const card = slide.querySelector('.ctk-card');
         if (card) card.style.setProperty('--bg-url', url);
         const img = slide.querySelector('.ctk-bg');
-        if (img) img.src = `https://picsum.photos/seed/${seed}/900/900`;
+        if (img) img.src = imageUrl;
       });
 
       // i18n helper (for aria-labels, etc.)
